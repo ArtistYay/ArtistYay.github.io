@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Flaws.Cloud &#8211; User&#039;s blog</title>
+	<atom:link href="/category/uncategorized/flaws-cloud/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Just another WordPress site</description>
+	<lastBuildDate>Wed, 25 May 2022 16:12:13 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.0.3</generator>
+	<item>
+		<title>Flaws.Cloud</title>
+		<link>/2022/05/25/flaws-cloud/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Wed, 25 May 2022 16:12:13 +0000</pubDate>
+				<category><![CDATA[Flaws.Cloud]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=159</guid>
+
+					<description><![CDATA[Welcome everyone to my write up of flaws.cloud! Big thank you to Day for introducing me to this challenge! Even though the challenge had hints to help there was some brainstorming and Googling. So without further Level 1 This level is *buckets* of fun. See if you can find the first sub-domain. First thing I [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Welcome everyone to my write up of <a rel="noreferrer noopener" href="http://flaws.cloud/" data-type="URL" data-id="http://flaws.cloud/" target="_blank">flaws.cloud</a>! Big thank you to Day for introducing me to this challenge! Even though the challenge had hints to help there was some brainstorming and Googling. So without further</p>
+
+
+
+<p><strong>Level 1</strong></p>
+
+
+
+<p><em>This level is *buckets* of fun. See if you can find the first sub-domain.</em></p>
+
+
+
+<p>First thing I did was an nslookup on the domain name (flaws.cloud) to get the IP address. I took the IP address and insert it into my browser which lead me to the Amazon S3 page. The whole point of this level was to get the sub-domain of the bucket so I had to do a nslookup again with the IP address provided, it gave me not only the sub-domain but the region it was hosted on.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/Screenshot-2022-05-02-211634-1024x462.png" alt="" class="wp-image-166"/></figure>
+
+
+
+<p>So not that we got the sub-domain what should we do with this information? Well we have to get to level 2! and I wonder if this bucket have any loose permissions on it? In order to do that we have to run the command &lt;aws s3 ls s3:flaws.cloud/ &#8212; no-sign-request &#8211;region us-east-2&gt;, which tells aws to list all the files in this S3 bucket in this region.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-02_213241370.png" alt="" class="wp-image-167"/></figure>
+
+
+
+<p>Hm&#8230;.that robots.txt file looks interesting. Let&#8217;s copy it to our local drive with this command &lt;aws s3 cp s3://flaws.cloud/secret-dd02c7c.html ./Downloads&gt; and let&#8217;s see what it says&#8230;.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-02_213913247-1024x576.png" alt="" class="wp-image-168"/><figcaption>Looks like we found the link to level 2!</figcaption></figure>
+
+
+
+<p><strong><em>Lessons learned</em></strong>: First things first is we should always check the permission for your S3 bucket. Yes you should have s3:GetObjects permissions turned on for your static website for everyone to see but you should be careful not to have everyone access to the list command.</p>
+
+
+
+<p><strong>Level 2</strong></p>
+
+
+
+<p><em>The next level is fairly similar, with a slight twist. You&#8217;re going to need your own AWS account for this. You just need the&nbsp;free tier.</em></p>
+
+
+
+<p>Now for this level we&#8217;re gonna need an AWS account, you can sign up for a free tier account anytime at <a rel="noreferrer noopener" href="https://portal.aws.amazon.com/billing/signup?type=enterprise#/start/email" data-type="URL" data-id="https://portal.aws.amazon.com/billing/signup?type=enterprise#/start/email" target="_blank">here</a>. </p>
+
+
+
+<p>The permissions on this S3 is loose but only for AWS accounts. Run this command &lt;aws s3 &#8211;profile (your account name goes here) ls s3://(bucket name, which will be the https link we found in the last level)&gt; to see all the files in the bucket.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-03_130432085.png" alt="" class="wp-image-170"/></figure>
+
+
+
+<p>Copied the secret file to my local drive and was able to go to level 3!</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-03_130910123-1024x576.png" alt="" class="wp-image-171"/></figure>
+
+
+
+<p><strong><em>Lesson Learned</em></strong>: Even though you limited access from the public you can still make it open to anybody with an AWS account. Make sure your not only configuring limited access from outsider&#8217;s but also other AWS user&#8217;s.</p>
+
+
+
+<p><strong>Level 3</strong></p>
+
+
+
+<p><em>The next level is fairly similar, with a slight twist. Time to find your first AWS key! I bet you&#8217;ll find something that will let you list what other buckets are.</em></p>
+
+
+
+<p>First thing we should do is list all the files in the bucket with the ls command from our previous level. Notice how there&#8217;s a git file in the bucket. In order for use to see the git history we have to use this command &lt;aws s3 sync s3://(bucketname) &#8212; no-sign-request &#8211;region&gt; to retrieve the git history.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-09_140849954.png" alt="" class="wp-image-174"/><figcaption>Listing the objects in the bucket</figcaption></figure>
+
+
+
+<p>Once all the git files have been retrieved use git log to go through the history then use git diff to see what changed.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-09_140939441.png" alt="" class="wp-image-175"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-09_141209066.png" alt="" class="wp-image-176"/></figure>
+
+
+
+<p>Looks like the creator made a mistake and hard coded their credentials. You can configure a profile with the aws configure command. </p>
+
+
+
+<p>Once that is done we can run the command &lt; aws &#8211;profile flaws s3 ls&gt; to get the name of the next level bucket.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-09_141407681.png" alt="" class="wp-image-177"/></figure>
+
+
+
+<p><strong><em>Lessons learned</em></strong>: People think accidentally leaking their access key and deleting the leak immediately will save them but in the end you always need to revoke said access key and make new ones even if you don&#8217;t suspect anything.</p>
+
+
+
+<p><strong>Level 4 </strong></p>
+
+
+
+<p><em>For the next level, you need to get access to the web page running on an EC2 at&nbsp;<a href="http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/">4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud</a> It&#8217;ll be useful to know that a snapshot was made of that EC2 shortly after nginx was setup on it.</em></p>
+
+
+
+<p>Firstly before we start please make sure you have a AWS free tier account because for this level your gonna need it. You can make one here. Afterwards configure said account with the aws configure command, you will need your access and secret key for that.</p>
+
+
+
+<p>Secondly, after making a free tier account, we need the owner ID to find the snapshot. Running the command sts get-caller-identity will help.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_090106309.png" alt="" class="wp-image-206"/></figure>
+
+
+
+<p>Good so the user ID is &#8216;975426262029&#8217; now let&#8217;s use that to list all the snapshots that user has.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/Screenshot-2022-05-25-090316.png" alt="" class="wp-image-207"/><figcaption>Run the command &lt;aws &#8211;profile flaws ec2 describe-snapshots &#8211;owner-id 975426262029&gt; to get all snapshots made by the user.</figcaption></figure>
+
+
+
+<p>Now since we have the snapshot ID we can can use it to make a volume in our free tier account. </p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_091149580.png" alt="" class="wp-image-208"/><figcaption>Running the command &lt;aws &#8211;profile (name of you profile) ec2 create-volume &#8211;availability-zone us-west-2a &#8211;region us-west-2 &#8211;snapshot-id snap-0b49342abd1bdcb89&gt;</figcaption></figure>
+
+
+
+<p>After you made the volume out of the snapshot you should be able to see it under the Volumes tab in EC2. If you don&#8217;t you have to change the region to us-west-2. Why did we create the volume in us-west-2? because the user created that snapshot in that region, if we we&#8217;re to make the volume using that snapshot in another region the volume would not work.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_091746778-1024x101.png" alt="" class="wp-image-209"/></figure>
+
+
+
+<p>Make an EC2 instances with that volume by launching an instances, you can choose which ever OS you would like to use, making a key pair to ssh into the instance, and making a new volume with the snapshop ID. </p>
+
+
+
+<p>During the make of the EC2 make sure you create a new volume instead of the one given. It should look like this:</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_094909869.png" alt="" class="wp-image-214"/></figure>
+
+
+
+<p>Now you should have an EC2 with the volume ready to be mounted.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_092915515.png" alt="" class="wp-image-210"/></figure>
+
+
+
+<p>Now SSH into the EC2 to mount the volume, I&#8217;m using windows so I will be using Putty. Once inside the EC2 use the command lsblk to list all the block devices. You should see at the bottom two devices called xvde and xvde1. We need to mount the xvde1 because if you recall when making the EC2 we had to make a second volume in the /dev/sde. Run the command &lt;sudo mount /dev/xvde1 /mnt&gt; to mount the device and run the &lt;lsblk&gt; again and you should see a /mnt next to the device like this.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_094041700.png" alt="" class="wp-image-211"/></figure>
+
+
+
+<p>You will need to change into the device and into the /home/ubuntu directory to cat the setupNginx.sh file.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_094301756.png" alt="" class="wp-image-212"/></figure>
+
+
+
+<p>Now that we have the password lets get to level 5.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_094355603.png" alt="" class="wp-image-213"/></figure>
+
+
+
+<p><strong><em>Lesson Learned: </em></strong>A lot of user use snapshots to backup a point and time of an EC2 but never protect said snapshot. One way to protect and sensitive files on the snapshot is to encrypt the snapshot or limited access on who can use the snapshot.</p>
+
+
+
+<p><strong>Level 5 </strong></p>
+
+
+
+<p><em>This EC2 has a simple HTTP only proxy on it. Here are some examples of it&#8217;s usage:</em></p>
+
+
+
+<ul><li><em><a href="http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/flaws.cloud/">http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/flaws.cloud/</a></em></li><li><em><a href="http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/summitroute.com/blog/feed.xml">http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/summitroute.com/blog/feed.xml</a></em></li><li><em><a href="http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/neverssl.com/">http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/neverssl.com/</a></em></li></ul>
+
+
+
+<p><em>See if you can use this proxy to figure out how to list the contents of the level6 bucket at&nbsp;<a href="http://level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.cloud/">level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.cloud</a>&nbsp;that has a hidden directory in it.</em></p>
+
+
+
+<p>For this level we have some instance metadata and user data not correctly protected. We can exploit the information using the curl command. </p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_101033902.png" alt="" class="wp-image-215"/><figcaption>How did you figure out how to read the metadata? I used the <a href="http://www.dowdandassociates.com/blog/content/howto-get-amazon-ec2-instance-metadata/" data-type="URL" data-id="http://www.dowdandassociates.com/blog/content/howto-get-amazon-ec2-instance-metadata/" target="_blank" rel="noreferrer noopener">documentation</a> to help me.</figcaption></figure>
+
+
+
+<p>Now we see there&#8217;s alot of dates but the only data we care for is the latest data so let&#8217;s curl into latest. Then we see meta-data, lets curl into that and now we see a whole bunch of data but the only one that sticks out to me is the IAM data.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_101518919.png" alt="" class="wp-image-216"/></figure>
+
+
+
+<p>Looks like there&#8217;s some security credentials let&#8217;s curl into it and see what&#8217;s in it.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_101736093-1024x171.png" alt="" class="wp-image-217"/></figure>
+
+
+
+<p>Looks like there&#8217;s some credentials left out in the open. Let&#8217;s configure a profile with those credentials to see if we can list all the contents in the level 6 bucket.</p>
+
+
+
+<p>Once your finished let&#8217;s list all the contents using the command &lt;aws &#8211;profile (your profile name) s3 ls level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.cloud&gt;</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_102126878.png" alt="" class="wp-image-218"/></figure>
+
+
+
+<p>Now that we can see the contents of this bucket we can move on to level 6.</p>
+
+
+
+<p><strong><em>Lesson Learned: </em></strong>Most customers use the metadata IP address to get metadata on themselves. It can be used for good but also for bad, for example in level 5, we didn&#8217;t have to do much work in order to get security credentials on the profile user. In order to prevent data like that from getting leaked make sure your enforcing IMDSv2 and having your applications deny any request coming in from IP address 169.254.169.254</p>
+
+
+
+<p><strong>Level 6</strong></p>
+
+
+
+<p><em>For this final challenge, you&#8217;re getting a user access key that has the SecurityAudit policy attached to it. See what else it can do and what else you might find in this AWS account.</em></p>
+
+
+
+<p><em>Access key ID: AKIAJFQ6E7BY57Q3OBGA<br>Secret: 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</em></p>
+
+
+
+<p>Before we start on this level let&#8217;s configure a profile using the credentials given to us. </p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_110528425.png" alt="" class="wp-image-219"/></figure>
+
+
+
+<p>After we configure our user let&#8217;s figure out who we are.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_110649798.png" alt="" class="wp-image-220"/></figure>
+
+
+
+<p>We have a set user &#8216;Level6&#8217; that&#8217;s different from our configure name, since we have the user name for those credentials let&#8217;s figure out what type of policies are attached to said user.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_110912414.png" alt="" class="wp-image-221"/></figure>
+
+
+
+<p>We see that we have two polices listed one of them the creator of the challenge created. Let&#8217;s take a look into that policy to get the version ID.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_113720064.png" alt="" class="wp-image-222"/></figure>
+
+
+
+<p>Now that we have the version ID let&#8217;s see what the policy is giving permissions to do. </p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_113911771.png" alt="" class="wp-image-223"/><figcaption>We can see the policy is allowing us to call an api gateway.</figcaption></figure>
+
+
+
+<p>9 times outta 10 an api gateway will have a Lambda function attached to it. Let&#8217;s list out all the Lambda functions on this account.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_115824575.png" alt="" class="wp-image-224"/></figure>
+
+
+
+<p>We have a Lambda function named &#8216;Level6&#8217; list see what the Lambda does.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_120015443.png" alt="" class="wp-image-225"/><figcaption>This tells us the ability to execute the api and that the rest api ID is s33ppypa75</figcaption></figure>
+
+
+
+<p>Now that we have the rest api ID we want to know the stage name</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_120621076.png" alt="" class="wp-image-226"/></figure>
+
+
+
+<p>The output shows that it&#8217;s in the PROD stage. You can call Lambda functions by it&#8217;s rest api and it&#8217;s stage name. Let&#8217;s input https://s33ppypa75.execute-api.us-west-2.amazonaws.com/Prod/level6 into our browser and let&#8217;s see what comes up.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_120853178.png" alt="" class="wp-image-227"/></figure>
+
+
+
+<p>Looks like we have the link to the end of the challenge!</p>
+
+
+
+<p><strong><em>Lessons Learned</em></strong>: Giving permissions to sensitive data like polices in your environment can really be detrimental. Attackers can leverage this information to gain access to your account any way they can. One thing you can do is give least privilege&#8217;s to certain user&#8217;s.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

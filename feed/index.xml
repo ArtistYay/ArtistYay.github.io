@@ -1,0 +1,2411 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>User&#039;s blog</title>
+	<atom:link href="/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Just another WordPress site</description>
+	<lastBuildDate>Fri, 28 Oct 2022 02:13:01 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.0.3</generator>
+	<item>
+		<title>Hello world!</title>
+		<link>/2022/10/28/hello-world/</link>
+					<comments>/2022/10/28/hello-world/#comments</comments>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Fri, 28 Oct 2022 02:13:01 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">http://127.0.0.1/?p=1</guid>
+
+					<description><![CDATA[Welcome to WordPress. This is your first post. Edit or delete it, then start writing!]]></description>
+										<content:encoded><![CDATA[
+<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>/2022/10/28/hello-world/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Terraform in Azure</title>
+		<link>/2022/07/19/terraform-in-azure/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Tue, 19 Jul 2022 00:42:42 +0000</pubDate>
+				<category><![CDATA[Azure]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=416</guid>
+
+					<description><![CDATA[Terraform Initialize The command &#60;terraform init> initialize a terraform environment, and downloading providers and modules. I used cloud shell to make run terraform on. First thing I did was make a directory just for terraform using &#60;mkdir> command and the changed into that directory. I then used the command &#60;code provider.tf> to make a file [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p><strong><em>Terraform Initialize</em></strong></p>
+
+
+
+<p>The command <em>&lt;terraform init></em> initialize a terraform environment, and downloading providers and modules.</p>
+
+
+
+<p>I used cloud shell to make run terraform on. First thing I did was make a directory just for terraform using <em>&lt;mkdir> </em>command and the changed into that directory.</p>
+
+
+
+<p>I then used the command <em>&lt;code provider.tf></em> to make a file called provider.tf and open it using the Azure IDE called Monaco.</p>
+
+
+
+<p>I think copy the provider code from the terraform <a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group" data-type="URL" data-id="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group" target="_blank" rel="noreferrer noopener">registry</a> and paste it in the file.</p>
+
+
+
+<pre class="wp-block-code"><code>terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.14.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+
+  storage_use_azuread = true
+}</code></pre>
+
+
+
+<p>Afterwards I ran <em>&lt;terraform init> </em></p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_195652607.png" alt="" class="wp-image-417"/></figure>
+
+
+
+<p><strong><em>Terraform Format</em></strong></p>
+
+
+
+<p>The <em>&lt;terraform fmt></em> command automatically format the files your coding in.</p>
+
+
+
+<p>So first the I did is make a variables.tf and main.tf file using the &lt;touch> command. Once I did that I open all the files in the directory with <em>&lt;code .></em> command.</p>
+
+
+
+<p>I wanted to make a resource group first so I looked for the template in the registry and come across this.</p>
+
+
+
+<pre class="wp-block-code"><code>resource "azurerm_resource_group" "example" {
+  name     = "example"
+  location = "West Europe"
+}
+</code></pre>
+
+
+
+<p>I edited it with my location name which is &#8220;East US&#8221;. Now let&#8217;s go to out variables file and add a variable. Here&#8217;s what I put in my variable file.</p>
+
+
+
+<pre class="wp-block-code"><code>variable "resource_group_name" {
+  description = "Name for the resource group"
+  type        = string
+  default     = "terraform-basics"
+}</code></pre>
+
+
+
+<p>Now let&#8217;s format to see if there&#8217;s any format changes.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_200546703.png" alt="" class="wp-image-418"/></figure>
+
+
+
+<p><strong><em>Terraform validate</em></strong></p>
+
+
+
+<p>Command <em>&lt;terraform validate></em> confirms if the files are syntactically and logically sound. Basically making sure everything makes sense.</p>
+
+
+
+<p><strong><em>Terraform Plan</em></strong></p>
+
+
+
+<p><em><strong>&lt;terraform plan></strong></em> displays the actions Terraform will take.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_201138304-1024x624.png" alt="" class="wp-image-420"/></figure>
+
+
+
+<p>I know some of your like &#8220;wait Artist my output doesn&#8217;t look like that&#8221;, that&#8217;s because I add more to my files.</p>
+
+
+
+<p>In my main.tf file I add a container group and put it in my resource group.</p>
+
+
+
+<pre class="wp-block-code"><code>resource "azurerm_resource_group" "basics" {
+  name     = var.resource_group_name
+  location = var.location
+}
+resource "azurerm_container_group" "example" {
+  name                = var.container_group_name
+  location            = azurerm_resource_group.basics.location
+  resource_group_name = azurerm_resource_group.basics.name
+  ip_address_type     = "Public"
+  dns_name_label      = "${var.prefix}-${var.container_group_name}"
+  os_type             = "Linux"
+
+  container {
+    name   = "inspectorgadget"
+    image  = "jelledruyts/inspectorgadget:latest"
+    cpu    = "0.5"
+    memory = "1.0"
+
+    ports {
+      port     = 80
+      protocol = "TCP"
+    }
+  }
+}</code></pre>
+
+
+
+<p>Before I continue on I just want to explain my resource group name and location in the resource &#8220;azure container group&#8221;. So I wanted to add the container to a resource group right? I had to specific the name, I told terraform to look in the resource &#8220;azurerm_resource_group&#8221;  with &#8220;basics&#8221; and under name you should get the name of the resource group. Same thing with the location.</p>
+
+
+
+<p>And in my variables.tf file I just declared the variables needed.</p>
+
+
+
+<pre class="wp-block-code"><code>variable "resource_group_name" {
+  description = "Name for the resource group"
+  type        = string
+  default     = "terraform-basics"
+}
+variable "location" {
+  description = "Azure region"
+  type        = string
+  default     = "East US"
+}
+variable "container_group_name" {
+  description = "name of the container group"
+  type        = string
+  default     = "terraform-basics"
+}
+variable "prefix" {
+  description = "Prefix string to ensure FQDNs are globally unique"
+  type        = string
+}
+</code></pre>
+
+
+
+<p>Even made a terraform.tfvars file to specific my variables more.</p>
+
+
+
+<pre class="wp-block-code"><code>location = "eastus"
+prefix   = "Artist"</code></pre>
+
+
+
+<p><strong><em>Terraform Apply</em></strong></p>
+
+
+
+<p><em>&lt;Terraform apply></em> just builds out or creates your resources in Azure.</p>
+
+
+
+<p>Now let&#8217;s go ahead and apply.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_201930978.png" alt="" class="wp-image-421"/><figcaption>Again it will look different to your output because I applied before adding more code to the files.</figcaption></figure>
+
+
+
+<p><strong><em>Terraform Destroy</em></strong></p>
+
+
+
+<p>And now to destroy all that I created <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f641.png" alt="🙁" class="wp-smiley" style="height: 1em; max-height: 1em;" /> with the &lt;terraform destroy> command.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_203533818-1024x362.png" alt="" class="wp-image-423"/><figcaption>Bye Bye hard work <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f641.png" alt="🙁" class="wp-smiley" style="height: 1em; max-height: 1em;" /> lol</figcaption></figure>
+
+
+
+<p><strong><em>Morale of the story:</em></strong> Nothing to extravagant, just wanted to brush up on some Terraform in Azure. To me Azure is a lot to learn then AWS. Just the other day I didn&#8217;t know what a cloud shell was and when I finally figured out I can&#8217;t stop using it lol. It might look like i&#8217;m all over the place with my learning but this is just how I learn. Doing different things to see how they all flow together but that&#8217;s all I have for today, just wanna keep you updated.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>A Security Trio in Azure</title>
+		<link>/2022/07/15/a-security-trio-in-azure/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Fri, 15 Jul 2022 15:10:44 +0000</pubDate>
+				<category><![CDATA[Azure]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=387</guid>
+
+					<description><![CDATA[Today I want to go over some Azure security technologies. What is Azure Active Directory (AD)? Azure Active Directory Is a cloud based identity service. It uses authentication to much sure you are who you say you are and authorization to know what do you have access to. Not to get confused with Active Directory [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Today I want to go over some Azure security technologies.</p>
+
+
+
+<p><strong><em>What is Azure Active Directory (AD)?</em></strong></p>
+
+
+
+<p>Azure Active Directory Is a cloud based identity service. It uses authentication to much sure you are who you say you are and authorization to know what do you have access to. Not to get confused with Active Directory for on premises Windows Servers. Azure Active Directory deals more with Internet-based services and applications like Microsoft 365, Azure services, and third-party SaaS applications. Not saying you can use both together, that&#8217;s where hybrid identity comes in.</p>
+
+
+
+<p>When you first sign up Azure AD is already in motion and you have a tenant configured already. A tenant is an organization which stores all the users in that organization.</p>
+
+
+
+<p>So what type of features work within Azure AD? or what can you do in Azure AD?:</p>
+
+
+
+<ul><li>Application Management &#8211; You can manage your cloud and on-premises apps</li><li>Authentication &#8211; User&#8217;s could be able to reset their own passwords using Self Service Password Reset (SSPR)</li><li>Conditional Access &#8211; Conditional access is a if/then statement to manage access to your cloud apps. If a user wants to access a resource, then they must complete an action.</li><li>Device Management &#8211; You can manage how cloud or on-premises devices access corporate data.</li></ul>
+
+
+
+<p>There&#8217;s many other things you can use Azure AD for, for example Azure AD Business &#8211; to &#8211; Business which you can invite corporate partner&#8217;s to access your data instead of creating a user. Or maybe you want to make onboarding a new employee easier? have a package of permissions and apps they need to get the job done and request access to them? well you can with Entitlement Management.</p>
+
+
+
+<p>Azure AD has so much to offer and I don&#8217;t wanna prolong but this is just the surface for this service.</p>
+
+
+
+<p><strong><em>What is Azure Sentinel?</em></strong></p>
+
+
+
+<p>Azure Sentinel is a SIEM (Security information and event management; a tool that an organization uses to collect, analyze, and perform security operations on its computer systems.) and a SOAR (Security orchestration automation and response; helps coordinate, execute and automate tasks between various people and tools all within a single platform.). A centralized management interface that leverages other Azure services as well.</p>
+
+
+
+<p>It can collect security data across your enterprise, detect threats with intelligence, investigate incidents using the help of AI, and respond rapidly with automation. Azure Sentinel is built and uses the Log Analytics workspace to monitor data. Data that&#8217;s been parse with Data Connectors.</p>
+
+
+
+<p>You can configure Sentinel alerts through the analytics component, Microsoft gives us analytics rule templates to help use get started. There&#8217;s different types of rules you can configure like Fusion, Machine Learning Behavioral, Anomaly, Microsoft Security, and Scheduled.</p>
+
+
+
+<p>Moral of the story Azure Sentinel is a powerful tool, how so? well you can connect to a variety of data sources and intelligently analyze monitoring data and create alerts for suspicious activities, Proactively hunt for security threats, use Jupyter notebooks to leverage Machine Learning, Automate security tasks and response through Azure Logic apps-based playbooks, even Integrate with Azure Monitor workbooks for interactive reporting and analysis!</p>
+
+
+
+<p><strong><em>What is Microsoft Defender?</em></strong></p>
+
+
+
+<p>There&#8217;s multiple Microsoft Defender versions. You have defender for cloud, defender for endpoint, even defender for IoT! so instead of focusing on one version I gave a brief description of what it is, why do we use it, and how it differs from one another.</p>
+
+
+
+<ul><li><strong>Microsoft Defender for Cloud (Azure Security Center) &#8211;</strong> Defender for Cloud is a way to protect all your cloud assets in one. It doesn&#8217;t matter if your using AWS or GCP, defender protects them all! even on premises environments. Defender for cloud has various plans for different scenarios, for example, let&#8217;s you have a MySQL server that has sensitive data, you would want Defender for servers. Not only does protect your environment but it also recommends best security posture for your environment using a Secure Score and how you can remediate the misconfigurations.</li><li><strong>Microsoft Defender for Identity (Azure Advanced Threat Protection) &#8211; </strong>The most common attack in cybersecurity is social engineering. A user doesn&#8217;t take the extra precaution to analyze what their clicking a link they received in a email and entering credentials but this is where Defender for Identity comes in. No it doesn&#8217;t stop user&#8217;s from clicking links but it does alert you when a user activity is suspicious. It first monitor&#8217;s user&#8217;s behaviors from your on premises Active Directory then creates a baseline of that behavior. For example, let&#8217;s say your user is searching for information about other user&#8217;s in the environment, Defender for identity use the cyber kill chain and throws up a flag marking it as reconnaissance.</li><li><strong style="color: var(--ast-global-color-3); font-size: 1rem;">Microsoft Defender for Endpoint &#8211;</strong> Defender for Endpoint helps you prevent, detect, and respond to threats on devices in your environment. That&#8217;s including mobile devices to! It provides Threat and vulnerability management, Attack surface reduction, Next-generation protection, Endpoint detection and response, Automated investigation and remediation, Microsoft Threat Experts, and Centralized management and API. It uses behavioral sensors to gather activities on the endpoints.</li><li><strong>Microsoft 365 Defender &#8211; </strong>Let&#8217;s say you have all these Defender for Endpoint, Office 365, Identity, and Cloud Apps enabled in your environment but need a centralized view of the full scope of the attack? well that&#8217;s where Microsoft Defender comes in, Microsoft 365 defender takes that anomalous behavior alert from Defender for Endpoint and the suspicious sign in alert from Defender for Identity and puts it all in one incident so instead of going into a rabbit hole of getting information of an attack the full details of who, what, why, when, and how is all there in one. In other words Microsoft 365 Defender analyze threat data across applications, endpoints, identity, and data to build a complete picture of each attack.</li><li><strong>Microsoft Defender for Office 365 &#8211; </strong>Defender for Office 365 deals with protecting your organization from emails that has malicious attachments and links. Defender for Office 365 has two plans. Plan one has the option to safely open attachments and links, plan 2 has automated investigation and response with an attack simulation and training for your users. Defender for Office 365 has 4 layers of protection. Edge protection, Sender Intelligence, Content filtering, and Post-Delivery.</li><li><strong>Microsoft Defender for Cloud Apps &#8211; </strong>Most companies are moving their computing resources to the cloud and need a way to protect all their data and make sure all your user&#8217;s have the ability to access your data anytime and anywhere. Defender for Cloud Apps acts as a cloud access security broker (CASB) or gatekeepers to your organizations data. It also help you stay compliant with government compliance requirements and labels data with classification to prevent data loss.</li></ul>
+
+
+
+<p><strong><em>What is Microsoft Purview?</em></strong></p>
+
+
+
+<p>Data is the most sensitive thing in your organization. You need to protect it but also be in compliance of any government frameworks (HIPPA, PCI DSS, etc.) and that&#8217;s where Microsoft Purview comes in, it gives you a bird eyes view of your data estate. It helps you classify data with labels, you can see what data is out of date &amp; who owns that data, you can understand the origin of your data and how to keep your business growing, and much more. Purview is fairly new but you can learn more about it <a href="https://docs.microsoft.com/en-us/purview/" data-type="URL" data-id="https://docs.microsoft.com/en-us/purview/" target="_blank" rel="noreferrer noopener">here </a>and <a href="https://azure.microsoft.com/en-us/services/purview/#overview" data-type="URL" data-id="https://azure.microsoft.com/en-us/services/purview/#overview" target="_blank" rel="noreferrer noopener">here</a>.</p>
+
+
+
+<p><strong><em>How do they all fit together?</em></strong></p>
+
+
+
+<p>Protecting your organization can be a headache, and with all the tools available (firewalls, EDRs, IPS, etc.) it can be very expensive especially when different tools have different features. Microsoft makes it a little bit more manageable especially with your cloud assets. You can enable Microsoft Defender to help protect your on-premise, cloud, even mobile &amp; IoT devices, you can leverage Microsoft Sentinel to give you a brooder insight of what&#8217;s going on instead of pivoting to each defender tool to connect the dots, Azure AD let&#8217;s you control who has access to what, where they can access it, and when or how long they can access it and Purview makes sure your data is complaint and protected in your organization. I know all this seems to good to be true but that&#8217;s where researching and knowing what your organization needs come into play but I hope I explained this in my best ability but if anybody has questions or comments be sure to let me know on LinkedIn but until then thank you!</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Troubleshooting AWS Network Connectivity: Security Groups and NACLs</title>
+		<link>/2022/07/07/troubleshooting-aws-network-connectivity-security-groups-and-nacls/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Thu, 07 Jul 2022 17:11:39 +0000</pubDate>
+				<category><![CDATA[AWS]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=368</guid>
+
+					<description><![CDATA[Hey everyone! Hope all is good. Today I wanted to go through a lab. Wanted to put my troubleshooting skills to the test. So this is the scenario a junior administrator has deployed a VPC and instances, but there are a few things wrong.&#160;Instance3&#160;is not able to connect to the internet and the junior admin [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Hey everyone! Hope all is good. Today I wanted to go through a lab. Wanted to put my troubleshooting skills to the test. So this is the scenario a junior administrator has deployed a VPC and instances, but there are a few things wrong.&nbsp;Instance3&nbsp;is not able to connect to the internet and the junior admin can&#8217;t determine why. Being a senior administrator, it&#8217;s your responsibility to troubleshoot the issue and ensure the instance has connectivity to the internet, so that you can ping and log in to the instance using SSH.</p>
+
+
+
+<p>First thing I did was look at the instance security group to see what rules were created for the instance.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_115647151.png" alt="" class="wp-image-369"/><figcaption>The instance is able to receive SSH and ICMP traffic from all sources and is able to communicate to the internet. </figcaption></figure>
+
+
+
+<p>Looks like the security group has the correct rules it needs. Now let&#8217;s look at the subnet the instance is in. </p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_120312920-965x1024.png" alt="" class="wp-image-370"/><figcaption>The subnet the instance is in, the inbound and outbound rules has not been properly configured. It only has deny rules.</figcaption></figure>
+
+
+
+<p>Let&#8217;s edit the rules to accept SSH and ICMP and open the outbound connections from anywhere.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_121122728-1024x576.png" alt="" class="wp-image-371"/></figure>
+
+
+
+<p>Now that the subnet has the rules configured properly we have to test to see if the instance is able to be reached but the instance only has a private IP address. Let&#8217;s allocate a public IP and attach it to the instances. Let&#8217;s click on the instance and under actions click on networking, then manage IP addresses.  </p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_121519424-965x1024.png" alt="" class="wp-image-372"/></figure>
+
+
+
+<p>We then gonna see an option to allocate an IP addresses let&#8217;s click on the link, click on Allocate Elastic IP address.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_121644939-965x1024.png" alt="" class="wp-image-373"/></figure>
+
+
+
+<p>Allocate then associate it with the instance.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_121735805-965x1024.png" alt="" class="wp-image-374"/></figure>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_121823978-965x1024.png" alt="" class="wp-image-375"/></figure>
+
+
+
+<p>Now let&#8217;s ping the address to make sure everything is configured properly.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/Screenshot-2022-07-07-122450.png" alt="" class="wp-image-376"/><figcaption>Hmmm looks like we still have connectivity issues with our instances.</figcaption></figure>
+
+
+
+<p>This part is where I received some help from the video. The instance route table didn&#8217;t have a rule to point to the internet gateway.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_123526104-965x1024.png" alt="" class="wp-image-378"/></figure>
+
+
+
+<p>Let&#8217;s edit the route table association and associate the route table from public 3.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_123800814-965x1024.png" alt="" class="wp-image-379"/></figure>
+
+
+
+<p>Let&#8217;s ping the instance again to see if we can ping the instance now.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-07_130525006.png" alt="" class="wp-image-380"/></figure>
+
+
+
+<p>And Voilà! looks like we figured it out!</p>
+
+
+
+<p><strong>Conclusion:</strong> For my thought process I was comparing the three instances together, what rules does instance 1 and 2 has that 3 don&#8217;t? Is it the subnet rules or the Network ACL?  I also have to remember in order for the instances in a subnet to talk I have to attach a internet gateway and configure my route table to talk to that gateway. And that&#8217;s all folks! hope someone learned something today because I did! until next time <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>CatPipeline</title>
+		<link>/2022/07/04/catpipline/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Mon, 04 Jul 2022 19:22:54 +0000</pubDate>
+				<category><![CDATA[AWS]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=281</guid>
+
+					<description><![CDATA[Today I wanted to go over a quick demo from Adrian Cantrill himself. I always wanted to create my own pipeline so making this should be fun 🙂 In this lab we&#8217;re gonna be using AWS Load balancer&#8217;s, ECS Fargate, CodeCommit, CodeDeploy, and many other&#8217;s! So let&#8217;s jump right into it! Stage 1: Configure Security [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Today I wanted to go over a quick demo from Adrian Cantrill himself. I always wanted to create my own pipeline so making this should be fun <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /> In this lab we&#8217;re gonna be using AWS Load balancer&#8217;s, ECS Fargate, CodeCommit, CodeDeploy, and many other&#8217;s! So let&#8217;s jump right into it!</p>
+
+
+
+<p><strong>Stage 1</strong>: <strong>Configure Security &amp; Create a CodeCommit Repo</strong></p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/catpipeline-arch-stage1-1024x541.png" alt="" class="wp-image-284"/></figure>
+
+
+
+<p>First thing we need to do is make an SSH Key for CodeCommit. I&#8217;m running on a Windows machine for this lab, if anybody is running on a Linux or MACOS machine you can go through the guide <a rel="noreferrer noopener" href="https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-ssh-unixes.html" data-type="URL" data-id="https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-ssh-unixes.html" target="_blank">here</a>. The guide for windows is <a rel="noreferrer noopener" href="https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-ssh-windows.html" target="_blank">here</a> also.</p>
+
+
+
+<p>Once we have the SSH connection set up we need to make a CodeCommit repository and Git Clone it to the folder of your choice. So for example I made a folder called repos on my desktop and Git Clone the repo.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-30_115828472.png" alt="" class="wp-image-289"/><figcaption>My repo is catpipeline-codecommit</figcaption></figure>
+
+
+
+<p>Finally we want to download the files provided for use using this link <a rel="noreferrer noopener" href="https://github.com/acantril/learn-cantrill-io-labs/raw/master/aws-codepipeline-catpipeline/01_LABSETUP/container.zip" target="_blank">https://github.com/acantril/learn-cantrill-io-labs/raw/master/aws-codepipeline-catpipeline/01_LABSETUP/container.zip</a>, unzip the file, and copy the files in the repo &lt;<em>catpipeline-codecommit&gt;</em>, afterwards we need to run these commands to push the images to the repo.</p>
+
+
+
+<pre class="wp-block-code"><code>git add -A . 
+git commit -m “container of cats” 
+git push 
+</code></pre>
+
+
+
+<p><strong>Stage 2</strong>: <strong>Configure CodeBuild to clone the repo, create a container image and store on ECR</strong></p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/catpipeline-arch-stage2-1024x540.png" alt="" class="wp-image-290"/></figure>
+
+
+
+<p>Now for this stage we&#8217;re going to create a private Amazon Elastic Container Registry to store our Docker images in. </p>
+
+
+
+<p>Next we will use CodeBuild to manage and build our Docker image.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-01_100757399.png" alt="" class="wp-image-293"/><figcaption>Source means which type of repository is the source code to build the Docker.</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-01_101131350.png" alt="" class="wp-image-294"/><figcaption>Environment meaning what do you want the Docker image to be ran on. Do you have your own Docker image or need to use a managed AWS image.</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-01_101321643.png" alt="" class="wp-image-295"/><figcaption>Additional configuration under environment. We just specify the variables needed. IMAGE_TAG means every single time a Docker image is made it will be labeled as latest.</figcaption></figure>
+
+
+
+<p>Before the CodeBuild project is able to use ECR to store the Docker image it will need permissions to access ECR. So under IAM we need to configure it&#8217;s access. We will create an inline policy.</p>
+
+
+
+<pre class="wp-block-code"><code>{
+  "Statement": &#91;
+	{
+	  "Action": &#91;
+		"ecr:BatchCheckLayerAvailability",
+		"ecr:CompleteLayerUpload",
+		"ecr:GetAuthorizationToken",
+		"ecr:InitiateLayerUpload",
+		"ecr:PutImage",
+		"ecr:UploadLayerPart"
+	  ],
+	  "Resource": "*",
+	  "Effect": "Allow"
+	}
+  ],
+  "Version": "2012-10-17"
+}</code></pre>
+
+
+
+<p>We have our Docker image, we have a place to store the image, and we gave our build project permissions to store the image now all we need is the code that will build the image so let&#8217;s go into our CodeCommit repo and create a YAML file.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-01_102631247-1024x399.png" alt="" class="wp-image-296"/><figcaption>You can also make a YAML file on your local machine and push it to the repo.</figcaption></figure>
+
+
+
+<pre class="wp-block-code"><code>version: 0.2
+
+phases:
+  pre_build:
+	commands:
+	  - echo Logging in to Amazon ECR...
+	  - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+  build:
+	commands:
+	  - echo Build started on `date`
+	  - echo Building the Docker image...          
+	  - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+	  - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG      
+  post_build:
+	commands:
+	  - echo Build completed on `date`
+	  - echo Pushing the Docker image...
+	  - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG</code></pre>
+
+
+
+<p>Now here comes the moment of truth if we did everything correctly! Let&#8217;s build the project.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-01_103646163-1024x523.png" alt="" class="wp-image-297"/></figure>
+
+
+
+<p>and it failed. The log says it found a character that cannot start any token at line 4 but line 4 has pre_build: Let&#8217;s do some digging and see why.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-01_103848075.png" alt="" class="wp-image-298"/></figure>
+
+
+
+<p>Looks like YAML doesn&#8217;t allow tabs so let&#8217;s use VSCode to make the YAML file on our local machine and push it to our repo.</p>
+
+
+
+<p>First thing I did was pull the file from my repo and in my VSCode clicked spaces and covert my indentation to spaces.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/ir1a3.png" alt="" class="wp-image-299"/></figure>
+
+
+
+<p>Then pushed the code to the repository. Let&#8217;s run the build again.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_124358628-1024x271.png" alt="" class="wp-image-320"/></figure>
+
+
+
+<p>Looks like the build failed again because of the pull rate limit which is a common problem in the demo. Let&#8217;s like at the GitHub issues tab.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/Screenshot-2022-07-02-091235.png" alt="" class="wp-image-304"/></figure>
+
+
+
+<p>So the issues has been solved. I changed the line in my local Docker file and pushed it to the repo and ran the build again.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-02_091440161.png" alt="" class="wp-image-305"/></figure>
+
+
+
+<p>And the feeling of success is so bitter sweet!</p>
+
+
+
+<p>Now let&#8217;s go ahead and test our Docker image. In the guide Cantrill provides us with a link &lt;https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://learn-cantrill-labs.s3.amazonaws.com/aws-codepipeline-catpipeline/ec2docker.yaml&amp;stackName=DOCKER&gt; which provisions a cloudformation stack. It should look like this.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_121441930.png" alt="" class="wp-image-310"/><figcaption>The YAML file will build a VPC, with multiple subnets, a route table, an internet gateway, and a EC2.</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_121959936.png" alt="" class="wp-image-313"/></figure>
+
+
+
+<p>After the stack has been created we want to go to the EC2 dashboard and it should have an EC2 running.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_122158811.png" alt="" class="wp-image-314"/></figure>
+
+
+
+<p>What we want to do is connect with the EC2 using EC2 Instance Connect.</p>
+
+
+
+<p>First thing we want to do is make sure Docker is running on the EC2 instance with the &lt;<em>docker ps&gt;</em> command</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_122910157.png" alt="" class="wp-image-315"/></figure>
+
+
+
+<p>Secondly, we want our Docker to get access to our ECR so let&#8217;s run command &lt;<em><code>aws ecr get-login-password --region us-east-1</code></em>&gt; which should output this:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_123216812-1024x620.png" alt="" class="wp-image-316"/><figcaption>Don&#8217;t worry by the time you see this the lab will be taken down.</figcaption></figure>
+
+
+
+<p>Thirdly, we want to use this login information to login into our ECR so lets run this command &lt;aws ecr get-login-password &#8211;region us-east-1 | docker login &#8211;username AWS &#8211;password-stdin ACCOUNTID_REPLACEME.dkr.ecr.us-east-1.amazonaws.com&gt; where ACCOUNTID_REPLACEME is your account ID.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_123556361-1024x144.png" alt="" class="wp-image-317"/></figure>
+
+
+
+<p>Fourthly, we need to pull the image from our ECR using &lt;<em>docker pull&gt;</em> and paste the URI of the pipeline.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_123915993-1024x230.png" alt="" class="wp-image-318"/></figure>
+
+
+
+<p>Lastly we want to run the docker image we just pulled using &lt;<em>docker run -p 80:80&gt;</em> and paste the docker image number. You can get the docker image using the command &lt;<em>docker images&gt;</em> </p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_124142548-1024x189.png" alt="" class="wp-image-319"/></figure>
+
+
+
+<p>After that we need to see if the EC2 shows what&#8217;s needed to be shown so in the browser type &lt;http://PUBLIC_IP_EC2&gt;/ where PUBLIC_IP_EC2 is your EC2 Public IP address.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/Screenshot-2022-07-04-124610-1024x643.png" alt="" class="wp-image-323"/><figcaption>Look at the cute cats <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /></figcaption></figure>
+
+
+
+<p><strong>Stage 3: Configure a CodePipeline with commit and build steps to automate build on commit.</strong></p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/catpipeline-arch-stage3-1024x541.png" alt="" class="wp-image-342"/></figure>
+
+
+
+<p>Let&#8217;s create a pipeline YAY! <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /> The reason why i&#8217;m so excited is because building pipelines are fun. A pipeline can help developers push code out more faster. CI/CD can test the code to much sure it can run properly in the environment but enough explaining let&#8217;s get into it.</p>
+
+
+
+<p>First thing we need to do is create the pipeline.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_131830167.png" alt="" class="wp-image-338"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_131942254.png" alt="" class="wp-image-339"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_132252930.png" alt="" class="wp-image-340"/></figure>
+
+
+
+<p>Now let&#8217;s test to see if the pipeline works. Let&#8217;s update our buildspec.yml file via our local machine and push it to our codecommit.</p>
+
+
+
+<pre class="wp-block-code"><code>version: 0.2
+
+phases:
+  pre_build:
+	commands:
+	  - echo Logging in to Amazon ECR...
+	  - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+	  - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+	  - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+	  - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+	commands:
+	  - echo Build started on `date`
+	  - echo Building the Docker image...          
+	  - docker build -t $REPOSITORY_URI:latest .
+	  - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG    
+  post_build:
+	commands:
+	  - echo Build completed on `date`
+	  - echo Pushing the Docker image...
+	  - docker push $REPOSITORY_URI:latest
+	  - docker push $REPOSITORY_URI:$IMAGE_TAG
+	  - echo Writing image definitions file...
+	  - printf '&#91;{"name":"%s","imageUri":"%s"}]' "$IMAGE_REPO_NAME" "$REPOSITORY_URI:$IMAGE_TAG" &gt; imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json</code></pre>
+
+
+
+<p>Let&#8217;s use this code to update the build.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/Screenshot-2022-07-04-132241.png" alt="" class="wp-image-341"/><figcaption>Look&#8217;s like the build has succeeded. If the build failed make sure your indentations are spaces not tabs.</figcaption></figure>
+
+
+
+<p>So let&#8217;s take a moment of push and run down what we did so far. We made a repository via CodeCommit to to hold our cat files, docker image, and our YAML build file. Then we made an ECR to hold our Docker image and used CodeBuild to create the image. Thirdly, we made a CloudFormation stack to build our EC2 in a VPC so the Docker image can run on. Fourthly, we made a CodePipeline so whenever we make changes to our buildspec.yml file and push it to CodeCommit it will store it to our S3 bucket and CodeBuild will run with the updated file. Now it&#8217;s time for our final stage in this demo.</p>
+
+
+
+<p><strong>Stage 4 : Create an ECS Cluster, TG&#8217;s , ALB and configure the code pipeline for deployment to ECS Fargate</strong></p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/catpipeline-arch-stage4-1024x540.png" alt="" class="wp-image-344"/></figure>
+
+
+
+<p>For this stage we want to configure an automated deployment of the cat pipeline application to ECS Fargate. So let&#8217;s create a application load balancer that will be the entry point for the containerized application.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_134741108.png" alt="" class="wp-image-345"/><figcaption>Make sure your it&#8217;s your default VPC and all availability zones are checked.</figcaption></figure>
+
+
+
+<p>We want to configure a security group that will allow all HTTP traffic in our Load Balancer.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_135026354.png" alt="" class="wp-image-346"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_135125672.png" alt="" class="wp-image-347"/></figure>
+
+
+
+<p>Let&#8217;s go back to configuring our Load Balancer and create a target group.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_135344478.png" alt="" class="wp-image-348"/><figcaption>This just mean any HTTP traffic that hits our Load Balancer, our Load Balancer will direct it to our Fargate</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_135632246.png" alt="" class="wp-image-349"/></figure>
+
+
+
+<p>Now that our Load Balancer is being made let&#8217;s configure our Fargate.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_140106816.png" alt="" class="wp-image-350"/><figcaption>Make sure your creating a cluster under ECS and not EKS. Make sure you choose network. </figcaption></figure>
+
+
+
+<p>Once the cluster is created we need to define the task so under task definitions click create and click on Fargate.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_140737267.png" alt="" class="wp-image-351"/></figure>
+
+
+
+<p>We also want to add a container to the Fargate.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_140857564-1024x448.png" alt="" class="wp-image-352"/><figcaption>The image should be the ECR URI.</figcaption></figure>
+
+
+
+<p>After the task definition has been created let&#8217;s view the definition and copy our JSON.</p>
+
+
+
+<pre class="wp-block-code"><code>{
+  "ipcMode": null,
+  "executionRoleArn": "arn:aws:iam:::role/ecsTaskExecutionRole",
+  "containerDefinitions": &#91;
+    {
+      "dnsSearchDomains": null,
+      "environmentFiles": null,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "secretOptions": null,
+        "options": {
+          "awslogs-group": "/ecs/catpiplinedemo",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "entryPoint": null,
+      "portMappings": &#91;
+        {
+          "hostPort": 80,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "command": null,
+      "linuxParameters": null,
+      "cpu": 0,
+      "environment": &#91;],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": &#91;],
+      "workingDirectory": null,
+      "secrets": null,
+      "dockerSecurityOptions": null,
+      "memory": null,
+      "memoryReservation": null,
+      "volumesFrom": &#91;],
+      "stopTimeout": null,
+      "image": ".dkr.ecr.us-east-1.amazonaws.com/catpipeline",
+      "startTimeout": null,
+      "firelensConfiguration": null,
+      "dependsOn": null,
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": true,
+      "links": null,
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "catpipline"
+    }
+  ],
+  "placementConstraints": &#91;],
+  "memory": "1024",
+  "taskRoleArn": null,
+  "compatibilities": &#91;
+    "EC2",
+    "FARGATE"
+  ],
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1::task-definition/catpiplinedemo:1",
+  "family": "catpiplinedemo",
+  "requiresAttributes": &#91;
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.task-eni"
+    }
+  ],
+  "pidMode": null,
+  "requiresCompatibilities": &#91;
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "runtimePlatform": {
+    "operatingSystemFamily": "LINUX",
+    "cpuArchitecture": null
+  },
+  "cpu": "512",
+  "revision": 1,
+  "status": "ACTIVE",
+  "inferenceAccelerators": null,
+  "proxyConfiguration": null,
+  "volumes": &#91;]
+}</code></pre>
+
+
+
+<p>Let&#8217;s create a service for the cluster.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_141758963.png" alt="" class="wp-image-354"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_141905116.png" alt="" class="wp-image-355"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_142055785.png" alt="" class="wp-image-356"/></figure>
+
+
+
+<p>Lastly let&#8217;s see if our Load Balancer is showing our cats! Go to EC2 under Load Balancer click on the catpipeline Load Balancer and copy the DNS name and paste it into the browser.</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_142433701-1024x660.png" alt="" class="wp-image-357" width="737" height="475"/><figcaption>Looks like it works!</figcaption></figure>
+
+
+
+<p>Now we&#8217;re not done yet, let&#8217;s add a deploy stage to our pipeline so when we commit to our repository it will deploy.</p>
+
+
+
+<p>Let&#8217;s go back to our codepipline and edit it. Under build we want to add a new stage called deploy.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_142923329.png" alt="" class="wp-image-358"/></figure>
+
+
+
+<p>Add an action to the group and let&#8217;s configure.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_143157361.png" alt="" class="wp-image-359"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_143239522.png" alt="" class="wp-image-360"/><figcaption>So let&#8217;s break down what&#8217;s going on. Our pipeline is listening to our CodeCommit for any changes, if any changes happen in our repo our Codebuild will create another Docker image based on our changed and store it to our ECR, then it will deploy the image in our ECS (Fargate).</figcaption></figure>
+
+
+
+<p>Let&#8217;s test to see if it works, in your local machine in the index.html file let&#8217;s make some changes to and push it.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_143859562.png" alt="" class="wp-image-361"/></figure>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_150735665-1024x551.png" alt="" class="wp-image-362"/><figcaption>Looks like the pipeline works!</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_150830188.png" alt="" class="wp-image-363"/></figure>
+
+
+
+<p><strong>Conclusion</strong></p>
+
+
+
+<p>This was an actual fun demo to go through I really liked it. My main goal in my career is to be able to build and maintain infrastructure without needing to see someone do it first so this is a good practice to do. I always learn things by being hands on with it. Hopefully I get a role soon so I can get more experience then just home labs. I ran into two problems in the demo first was the CodeBuild which I went over and second is the CodePipline deploy stage, make sure your spelling is correct. But until next time you guys and Happy 4th of July!</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Identity and Access Management (IAM)</title>
+		<link>/2022/07/04/identity-and-access-management-iam/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Mon, 04 Jul 2022 11:26:28 +0000</pubDate>
+				<category><![CDATA[AWS]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=274</guid>
+
+					<description><![CDATA[In today&#8217;s topic I wanted to go over IAM or Identity and Access Management. It&#8217;s very important to understand this service and what it&#8217;s used for. Many people have misconfigured the service in many ways, giving a user to much access to a service or leaking AWS access keys. For example, March 30, 2021 MobiKwik [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>In today&#8217;s topic I wanted to go over IAM or Identity and Access Management. It&#8217;s very important to understand this service and what it&#8217;s used for. Many people have misconfigured the service in many ways, giving a user to much access to a service or leaking AWS access keys. For example, March 30, 2021 <a rel="noreferrer noopener" href="https://techcrunch.com/2021/03/30/mobikwik-investigating-data-breach-after-100m-user-records-found-online/?guccounter=1&amp;guce_referrer=aHR0cHM6Ly9ibG9nLmNocmlzdG9waGV0ZC5mci8&amp;guce_referrer_sig=AQAAAE2ou4dSTjS-oQf2tOmGz87tCDjJpPfRahG1NszL9DyBoY5fg4vMWHoX8VVVdvtejFELTQ8_QFTV3Eu51M7zT2hd7KMb0KyP456sZao8UNuSbW_kkV07nxBeQOzIUDRVDOqGbF6I32uovG0jEOhVV_96NrKdFR122yjOjvflxnIw" data-type="URL" data-id="https://techcrunch.com/2021/03/30/mobikwik-investigating-data-breach-after-100m-user-records-found-online/?guccounter=1&amp;guce_referrer=aHR0cHM6Ly9ibG9nLmNocmlzdG9waGV0ZC5mci8&amp;guce_referrer_sig=AQAAAE2ou4dSTjS-oQf2tOmGz87tCDjJpPfRahG1NszL9DyBoY5fg4vMWHoX8VVVdvtejFELTQ8_QFTV3Eu51M7zT2hd7KMb0KyP456sZao8UNuSbW_kkV07nxBeQOzIUDRVDOqGbF6I32uovG0jEOhVV_96NrKdFR122yjOjvflxnIw" target="_blank">MobiKwik</a> went through a 100M user data breach because of a leaked AWS access key. The cloud can be an overwhelming place to be in but I&#8217;m here to help!</p>
+
+
+
+<p><strong>What is AWS IAM? </strong></p>
+
+
+
+<p>IAM has been around before AWS was founded. People usually know it as a framework where the authorized party will have the ability to control who has access to the systems. That sums up what AWS IAM is, it&#8217;s a access control where you can specify who has the ability to use what service under what condition. Today I wanted to go over setting up and assuming IAM roles in an environment.</p>
+
+
+
+<p><strong>Create and Assume Roles in AWS</strong></p>
+
+
+
+<p>First step we want to do is create the correct policy for the user that&#8217;s provided in the lab. The policy will give the user full S3 access expect for two buckets that was made before hand.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/Screenshot-2022-06-29-125146-1024x668.png" alt="" class="wp-image-275"/></figure>
+
+
+
+<pre class="wp-block-code"><code>{
+    "Version": "2012-10-17",
+    "Statement": &#91;
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": &#91;
+                "s3:ListStorageLensConfigurations",
+                "s3:ListAccessPointsForObjectLambda",
+                "s3:GetAccessPoint",
+                "s3:PutAccountPublicAccessBlock",
+                "s3:GetAccountPublicAccessBlock",
+                "s3:ListAllMyBuckets",
+                "s3:ListAccessPoints",
+                "s3:PutAccessPointPublicAccessBlock",
+                "s3:ListJobs",
+                "s3:PutStorageLensConfiguration",
+                "s3:ListMultiRegionAccessPoints",
+                "s3:CreateJob"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": "arn:aws:s3::851592760101:accesspoint/*"
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": &#91;
+                "arn:aws:s3:*:851592760101:storage-lens/*",
+                "arn:aws:s3:*:851592760101:accesspoint/*",
+                "arn:aws:s3:::cfst-3352-0420dac77a81904f3474ca99-appconfigprod1-8x31vcbk3f3w",
+                "arn:aws:s3:::cfst-3352-0420dac77a81904f3474ca99-appconfigprod2-19s6selwyo5x3",
+                "arn:aws:s3:*:851592760101:job/*",
+                "arn:aws:s3:::*/*",
+                "arn:aws:s3:us-west-2:851592760101:async-request/mrap/*/*",
+                "arn:aws:s3-object-lambda:*:851592760101:accesspoint/*"
+            ]
+        }
+    ]
+}</code></pre>
+
+
+
+<p>Secondly, we want to attach the policy to a role we created.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/Screenshot-2022-06-29-125815-1024x526.png" alt="" class="wp-image-276"/></figure>
+
+
+
+<p>Thirdly we want to add the permissions of the policy to the user.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-29_131253333.png" alt="" class="wp-image-277"/></figure>
+
+
+
+<p>Now we can see we have access to the appconfig buckets but not the customer data buckets because we don&#8217;t need to give our devs access to anything customer related.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-29_131521736.png" alt="" class="wp-image-278"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/Screenshot-2022-06-29-131317.png" alt="" class="wp-image-279"/></figure>
+
+
+
+<p></p>
+
+
+
+<p>You can also use CloudFormation to create groups, policies, and roles with MFA enforced.</p>
+
+
+
+<pre class="wp-block-code"><code>Parameters:
+  AllowRegion:
+    Type: String
+    Description: 'A single region that resources can be created in, where service supports this permissions including EC2'
+    Default: 'ap-southeast-2'  
+  BaselineNamePrefix:
+    Type: String
+    Description: 'The prefix for roles, groups and policies created by this stack'
+    Default: 'Baseline'
+  BaselineExportName:
+    Type: String
+    Description: 'The CloudFormation export name prefix used with the resource name for the resources created, eg Baseline-PrivilegedAdminRole'
+    Default: 'Baseline'
+    MinLength: '3'
+    MaxLength: '32'
+  # BaselineS3TemplateBucket:
+  #   Type: String
+  #   Description: Case sensitive bucket name that contains cloudformation templates
+  #   Default: ''
+  IdentityManagementAccount:
+    Type: String
+    Description: AccountId that is trusted to assume all roles, or blank for no cross-account trust. Note that the trusted account also needs to be appropriately secured.
+    Default: ''
+  ToolingManagementAccount:
+    Type: String
+    Description: AccountId that is trusted to assume the ReadOnly and StackSet roles, or blank for no cross-account trust. Note that the trusted account also needs to be appropriately secured.
+    Default: ''
+  OrganizationsRootAccount:
+    Type: String
+    Description: AccountId that is trusted to assume Organizations role, or blank for no cross-account trust. Note that the trusted account also needs to be appropriately secured.
+    Default: ''
+Conditions:
+  LinkToIdentityManagementAccount: !Not
+    - !Equals
+      - !Ref IdentityManagementAccount
+      - ''
+  LinkToToolingManagementAccount: !Not
+    - !Equals
+      - !Ref ToolingManagementAccount
+      - ''
+  LinkToOrganizationsRootAccount: !Not
+    - !Equals
+      - !Ref OrganizationsRootAccount
+      - ''
+Resources:
+  ManageSelfIAMUserGroupPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      ManagedPolicyName: !Sub '${BaselineNamePrefix}-ManageSelfIAMUserGroupPolicy'
+      Description: !Sub 'Policy for ${BaselineNamePrefix} managing own IAM user'
+      Path: /
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 'iam:GetAccountPasswordPolicy'
+            Resource: '*'
+          - Sid: AllowUsersToListMFADevicesandUsersForConsole
+            Effect: Allow
+            Action:
+              - 'iam:ListMFADevices'
+              - 'iam:ListVirtualMFADevices'
+              - 'iam:ListUsers'
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - 'iam:ChangePassword'
+            Resource:
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:user/${!aws:username}'
+          - Sid: AllowUsersToDeactivateTheirOwnVirtualMFADevice
+            Effect: Allow
+            Action:
+              - 'iam:DeactivateMFADevice'
+              - 'iam:*LoginProfile'
+              - 'iam:*AccessKey*'
+              - 'iam:*SSHPublicKey*'
+            Resource:
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:user/${!aws:username}'
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:mfa/${!aws:username}'
+            Condition:
+              Bool:
+                'aws:MultiFactorAuthPresent': true
+          - Sid: AllowUsersToCreateEnableResyncDeleteTheirOwnVirtualMFADevice
+            Effect: Allow
+            Action:
+              - 'iam:CreateVirtualMFADevice'
+              - 'iam:EnableMFADevice'
+              - 'iam:ResyncMFADevice'
+              - 'iam:DeleteVirtualMFADevice'
+            Resource:
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:user/${!aws:username}'
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:mfa/${!aws:username}'
+  ManageSelfIAMUserGroup:
+    Type: 'AWS::IAM::Group'
+    DependsOn:
+      - ManageSelfIAMUserGroupPolicy
+    Properties:
+      GroupName: !Sub '${BaselineNamePrefix}-ManageSelf'
+      ManagedPolicyArns:
+        - !Ref ManageSelfIAMUserGroupPolicy
+      Path: /
+  AccountWideReadOnlyRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${BaselineNamePrefix}-AccountWideReadOnly'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'sts:AssumeRole'
+            Condition:
+              Bool:
+                'aws:MultiFactorAuthPresent': 'true'
+          - !If
+            - LinkToIdentityManagementAccount
+            - Effect: Allow
+              Principal:
+                AWS:
+                  !Sub 'arn:aws:iam::${IdentityManagementAccount}:root'
+              Action: 'sts:AssumeRole'
+              Condition:
+                Bool:
+                  'aws:MultiFactorAuthPresent': 'true'
+            - !Ref 'AWS::NoValue'
+          - !If
+            - LinkToToolingManagementAccount
+            - Effect: Allow
+              Principal:
+                AWS:
+                  !Sub 'arn:aws:iam::${ToolingManagementAccount}:root'
+              Action: 'sts:AssumeRole'
+            - !Ref 'AWS::NoValue'
+  AccountWideReadOnlyGroup:
+    Type: 'AWS::IAM::Group'
+    DependsOn:
+      - ManageSelfIAMUserGroupPolicy
+    Properties:
+      GroupName: !Sub '${BaselineNamePrefix}-AccountWideReadOnly'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
+      Path: /
+  PrivilegedAdminGroupPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    DependsOn:
+      - PrivilegedAdminRole
+    Properties:
+      ManagedPolicyName: !Sub '${BaselineNamePrefix}-PrivilegedAdminGroupPolicy'
+      Description: !Sub 'Policy for ${BaselineNamePrefix} PrivilegedAdmin Group'
+      Path: /
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'sts:AssumeRole'
+              - 'sts:GetSessionToken'
+            Condition:
+              Bool:
+                'aws:MultiFactorAuthPresent': 'true'
+            Resource:
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:role/${PrivilegedAdminRole}'
+  PrivilegedAdminRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${BaselineNamePrefix}-PrivilegedAdmin'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'sts:AssumeRole'
+            Condition:
+              Bool:
+                'aws:MultiFactorAuthPresent': 'true'
+          - !If
+            - LinkToIdentityManagementAccount
+            - Effect: Allow
+              Principal:
+                AWS:
+                  !Sub 'arn:aws:iam::${IdentityManagementAccount}:root'
+              Action: 'sts:AssumeRole'
+              Condition:
+                Bool:
+                  'aws:MultiFactorAuthPresent': 'true'
+            - !Ref 'AWS::NoValue'
+  PrivilegedAdminGroup:
+    Type: 'AWS::IAM::Group'
+    DependsOn:
+      - PrivilegedAdminGroupPolicy
+      - ManageSelfIAMUserGroupPolicy
+    Properties:
+      GroupName: !Sub '${BaselineNamePrefix}-PrivilegedAdmin'
+      ManagedPolicyArns:
+        - !Ref PrivilegedAdminGroupPolicy
+      Path: /
+  RestrictedAdminGroupPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      ManagedPolicyName: !Sub '${BaselineNamePrefix}-RestrictedAdminGroupPolicy'
+      Description: !Sub 'Policy for ${BaselineNamePrefix} RestrictedAdmin Group'
+      Path: /
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'sts:AssumeRole'
+              - 'sts:GetSessionToken'
+            Condition:
+              Bool:
+                'aws:MultiFactorAuthPresent': 'true'
+            Resource:
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:role/${RestrictedAdminRole}'
+  RestrictedAdminGroup:
+    Type: 'AWS::IAM::Group'
+    Properties:
+      GroupName: !Sub '${BaselineNamePrefix}-RestrictedAdmin'
+      ManagedPolicyArns:
+        - !Ref RestrictedAdminGroupPolicy
+        - !Ref ManageSelfIAMUserGroupPolicy
+      Path: /
+  RestrictedAdminRole:
+    Type: 'AWS::IAM::Role'
+    DependsOn:
+      - RestrictedServicesDenyRolePolicy
+    Properties:
+      RoleName: !Sub '${BaselineNamePrefix}-RestrictedAdmin'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
+        - !Ref CloudFormationAdminRolePolicy
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'sts:AssumeRole'
+            Condition:
+              Bool:
+                'aws:MultiFactorAuthPresent': 'true'
+          - !If
+            - LinkToIdentityManagementAccount
+            - Effect: Allow
+              Principal:
+                AWS:
+                  - !Sub 'arn:aws:iam::${IdentityManagementAccount}:root'
+              Action: 'sts:AssumeRole'
+              Condition:
+                Bool:
+                  'aws:MultiFactorAuthPresent': 'true'
+            - !Ref 'AWS::NoValue'
+  RestrictedServicesDenyRolePolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      ManagedPolicyName: !Sub '${BaselineNamePrefix}-RestrictedServicesDenyRolePolicy'
+      Description: !Sub 'Policy for ${BaselineNamePrefix} Explicitly Denying Services and Resources'
+      Path: /
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Deny
+            Action:
+              - 'aws-portal:ModifyAccount'
+              - 'aws-portal:ModifyBilling'
+              - 'aws-portal:ModifyPaymentMethods'
+              - 'budgets:ModifyBudget'
+            Resource:
+              - '*'
+          - Effect: Deny
+            Action:
+              - 'cloudhsm:*'
+            Resource:
+              - '*'
+  IdentityAdminRolePolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      ManagedPolicyName: !Sub '${BaselineNamePrefix}-IdentityAdminRolePolicy'
+      Description: !Sub 'Policy for ${BaselineNamePrefix} IdentityAdmin Role'
+      Path: /
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 'iam:*'
+            Resource: '*'
+  IdentityAdminGroupPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    DependsOn:
+      - IdentityAdminRole
+    Properties:
+      ManagedPolicyName: !Sub '${BaselineNamePrefix}-IdentityAdminGroupPolicy'
+      Description: !Sub 'Policy for ${BaselineNamePrefix} IdentityAdmin Group'
+      Path: /
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'sts:AssumeRole'
+              - 'sts:GetSessionToken'
+            Condition:
+              Bool:
+                'aws:MultiFactorAuthPresent': 'true'
+            Resource:
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:role/${IdentityAdminRole}'
+  IdentityAdminRole:
+    Type: 'AWS::IAM::Role'
+    DependsOn:
+      - IdentityAdminRolePolicy
+      - CloudFormationAdminRolePolicy
+    Properties:
+      RoleName: !Sub '${BaselineNamePrefix}-IdentityAdmin'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
+        - !Ref IdentityAdminRolePolicy
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'sts:AssumeRole'
+            Condition:
+              Bool:
+                'aws:MultiFactorAuthPresent': 'true'
+          - !If
+            - LinkToIdentityManagementAccount
+            - Effect: Allow
+              Principal:
+                AWS:
+                  !Sub 'arn:aws:iam::${IdentityManagementAccount}:root'
+              Action: 'sts:AssumeRole'
+              Condition:
+                Bool:
+                  'aws:MultiFactorAuthPresent': 'true'
+            - !Ref 'AWS::NoValue'
+  IdentityAdminGroup:
+    Type: 'AWS::IAM::Group'
+    DependsOn:
+      - IdentityAdminGroupPolicy
+    Properties:
+      GroupName: !Sub '${BaselineNamePrefix}-IdentityAdmin'
+      ManagedPolicyArns:
+        - !Ref IdentityAdminGroupPolicy
+      Path: /
+  CloudFormationAdminRolePolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      ManagedPolicyName: !Sub '${BaselineNamePrefix}-CloudFormationAdminRolePolicy'
+      Description: !Sub 'Policy for ${BaselineNamePrefix} CloudFormation Role'
+      Path: /
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'cloudformation:EstimateTemplateCost'
+              - 'cloudformation:PreviewStackUpdate'
+              - 'cloudformation:ValidateTemplate'
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - 'cloudformation:CancelUpdateStack'
+              - 'cloudformation:ContinueUpdateRollback'
+              - 'cloudformation:CreateChangeSet'
+              - 'cloudformation:CreateStack'
+              - 'cloudformation:DeleteStack'
+              - 'cloudformation:ExecuteChangeSet'
+              - 'cloudformation:SetStackPolicy'
+              - 'cloudformation:SignalResource'
+              - 'cloudformation:UpdateStack'
+            Resource:
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:aws:transform/*'
+          - Effect: Allow
+            Action:
+              - 'iam:PassRole'
+              - 'sts:AssumeRole'
+              - 'sts:GetSessionToken'
+            Resource:
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:role/${BaselineNamePrefix}-CloudFormation'
+  CloudFormationRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${BaselineNamePrefix}-CloudFormation'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: cloudformation.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+              - Effect: Deny
+                Action:
+                  - 'cloudformation:CreateStack'
+                  - 'cloudformation:UpdateStack'
+                Resource: '*'
+                Condition:
+                  StringNotEquals:
+                    'cloudformation:TemplateURL':
+                      #- !Sub 'https://s3.amazonaws.com/${BaselineS3TemplateBucket}'
+                      - !Sub 'https://s3.amazonaws.com/*'
+              - Effect: Deny
+                Action:
+                  - 'cloudformation:CreateStack'
+                  - 'cloudformation:UpdateStack'
+                Resource: '*'
+                Condition:
+                  'Null':
+                    'cloudformation:TemplateURL': 'true'
+  StackSetRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: AWSCloudFormationStackSetExecutionRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'sts:AssumeRole'
+          - !If
+            - LinkToToolingManagementAccount
+            - Effect: Allow
+              Principal:
+                AWS:
+                  !Sub 'arn:aws:iam::${ToolingManagementAccount}:root'
+              Action: 'sts:AssumeRole'
+            - !Ref 'AWS::NoValue'
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+  OrganizationsRole:
+    Condition: LinkToOrganizationsRootAccount
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: OrganizationAccountAccessRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${OrganizationsRootAccount}:root'
+            Action: 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+Outputs:
+  ManageSelfRolePolicy:
+    Description: Manage Self Role Policy
+    Value: !Ref ManageSelfIAMUserGroupPolicy
+    Export:
+      Name: !Sub '${BaselineExportName}-ManageSelfRolePolicy'
+  AccountWideReadOnlyRole:
+    Description: Account Wide Read Only Role
+    Value: !GetAtt AccountWideReadOnlyRole.Arn
+    Export:
+      Name: !Sub '${BaselineExportName}-AccountWideReadOnlyRole'
+  AccountWideReadOnlyGroup:
+    Description: Account Wide Read Only Group
+    Value: !GetAtt AccountWideReadOnlyGroup.Arn
+    Export:
+      Name: !Sub '${BaselineExportName}-AccountWideReadOnlyGroup'
+  IdentityAdminRole:
+    Description: Identity Admin Role
+    Value: !GetAtt IdentityAdminRole.Arn
+    Export:
+      Name: !Sub '${BaselineExportName}-IdentityAdminRole'
+  PrivilegedAdminRole:
+    Description: Privileged Admin Role
+    Value: !GetAtt PrivilegedAdminRole.Arn
+    Export:
+      Name: !Sub '${BaselineExportName}-PrivilegedAdminRole'
+  RestrictedAdminGroup:
+    Description: Restricted Admin Group
+    Value: !Ref RestrictedAdminGroup
+    Export:
+      Name: !Sub '${BaselineExportName}-RestrictedAdminGroup'
+  RestrictedAdminRole:
+    Description: Restricted Admin Role
+    Value: !GetAtt RestrictedAdminRole.Arn
+    Export:
+      Name: !Sub '${BaselineExportName}-RestrictedAdminRole'
+  CloudFormationRole:
+    Description: Baseline CloudFormation Role
+    Value: !GetAtt CloudFormationRole.Arn
+    Export:
+      Name: !Sub '${BaselineExportName}-CloudFormationRole'
+  StackSetRole:
+    Description: Baseline StackSet Role
+    Value: !GetAtt StackSetRole.Arn
+    Export:
+      Name: !Sub '${BaselineExportName}-StackSetRole'
+  OrganizationsRole:
+    Condition: LinkToOrganizationsRootAccount
+    Description: Baseline Organizations Role
+    Value: !GetAtt OrganizationsRole.Arn
+    Export:
+      Name: !Sub '${BaselineExportName}-OrganizationsRole'</code></pre>
+
+
+
+<p></p>
+
+
+
+<p>Hope this was very helpful to you and informative. If there&#8217;s any question please feel free to message me on LinkedIn with any question but until next time, Artist out!</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>AWS Secrets Manager</title>
+		<link>/2022/07/04/aws-secrets-manager/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Mon, 04 Jul 2022 11:24:34 +0000</pubDate>
+				<category><![CDATA[AWS]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=265</guid>
+
+					<description><![CDATA[One problem developers run into is hard coding credentials. Let&#8217;s say you have a web server running on multiple EC2 instances and it&#8217;s talking to other microservices, how do we store the credentials for them to talk? that&#8217;s where AWS Secrets Manager comes in! What is AWS Secrets Manager? AWS Secrets Manager helps you store [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>One problem developers run into is hard coding credentials. Let&#8217;s say you have a web server running on multiple EC2 instances and it&#8217;s talking to other microservices, how do we store the credentials for them to talk? that&#8217;s where AWS Secrets Manager comes in!</p>
+
+
+
+<p><strong>What is AWS Secrets Manager?</strong></p>
+
+
+
+<p>AWS Secrets Manager helps you store secrets needed to access applications, services, and IT resources. AWS uses a plaintext data key to encrypt the secret in memory. When a secret is retrieved, Secrets Manager decrypts the data key (using the AWS KMS default keys) and uses the plaintext data key to decrypt the secret. </p>
+
+
+
+<p>Today I wanted to go over a lab on ACloudGuru on how we can implement AWS Secrets Management to authenticate to a RDS.</p>
+
+
+
+<p><strong>Using Secrets Manager to Authenticate with an RDS Database Using Lambda</strong>.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/JEkqCZu-1024x569.png" alt="" class="wp-image-266"/></figure>
+
+
+
+<p>First thing we&#8217;re going to do is create a Lambda function. Where gonna deploy it in the VPC that was made for us and use the two public subnets and security group previsioned. </p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-27_103042763-1024x599.png" alt="" class="wp-image-267"/></figure>
+
+
+
+<p>We want to create a layer using the mysql zip file provided and attach it to the Lambda function. Afterwards we have to make changes to the index.js file with the code provided.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-27_104834165.png" alt="" class="wp-image-269"/></figure>
+
+
+
+<p>Afterwards we have to create a secret to hold our credentials. </p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/Screenshot-2022-06-27-104240.png" alt="" class="wp-image-270"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/Screenshot-2022-06-27-104429.png" alt="" class="wp-image-271"/><figcaption>For this lab we turned on the rotation feature to a day.</figcaption></figure>
+
+
+
+<p>Lastly test the Lambda code to run. In order to to the Lambda function to work you have to enable the Secrets Manager VPC endpoint, modify the security group, and add a policy to the IAM role to allow it to connect to Secrets Manager. For some reason i&#8217;m getting an error whenever creating the endpoint so I was not able to get that part done.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-27_105932312.png" alt="" class="wp-image-272"/><figcaption>  <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f641.png" alt="🙁" class="wp-smiley" style="height: 1em; max-height: 1em;" /></figcaption></figure>
+
+
+
+<p>The is just the scratch of the surface of many security Key competencies, next time we&#8217;ll go over another cloud security practice that goes unnoticed but until then thank you for coming to my Ted Talk!</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>iam_privesc_by_rollback</title>
+		<link>/2022/06/13/iam_privesc_by_rollback/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Mon, 13 Jun 2022 20:01:41 +0000</pubDate>
+				<category><![CDATA[CloudGoat]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=231</guid>
+
+					<description><![CDATA[Today we&#8217;re going to do a privilege escalation exploit. We will start with an IAM user named &#8216;Raynor&#8217; who has little to no privileges and give him admin rights so let&#8217;s get started. Step 1: Analyze Raynor privileges One thing we have to do is make an sts call to get more information on the [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_123803077.png" alt="" class="wp-image-232"/></figure>
+
+
+
+<p>Today we&#8217;re going to do a privilege escalation exploit. We will start with an IAM user named &#8216;Raynor&#8217; who has little to no privileges and give him admin rights so let&#8217;s get started.</p>
+
+
+
+<p><strong><em>Step 1: Analyze Raynor privileges</em></strong></p>
+
+
+
+<p>One thing we have to do is make an sts call to get more information on the user at hand.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125256053.png" alt="" class="wp-image-326"/><figcaption><em>&lt;aws &#8211;profile Raynor &#8211;region us-east-1 sts get-caller-identity&gt;</em> Note the &#8211;profile Raynor has been set up before hand using the AWS configure command. When create this scenario Terraform provided me with the credentials I needed to set up.</figcaption></figure>
+
+
+
+<p>Now that we have the IAM user name we can continue with listing the policies the user has.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125338882.png" alt="" class="wp-image-327"/><figcaption><em>&lt;aws iam list-attached-user-policies &#8211;user-name raynor-iam_privesc_by_rollback_cgidlmvqgs57ds &#8211;profile Raynor</em>&gt;</figcaption></figure>
+
+
+
+<p>Great! we got the policy name that&#8217;s attached to Raynor. Now let&#8217;s see what type of permissions Raynor has. We&#8217;re going to have to list the versions of the policies first.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125426503.png" alt="" class="wp-image-328"/><figcaption><em>&lt;aws iam list-policy-versions &#8211;policy-arn arn:aws:iam:::policy/cg-raynor-policy-iam_privesc_by_rollback_cgidlmvqgs57ds &#8211;profile Raynor</em>></figcaption></figure>
+
+
+
+<p>You see that we have five versions of the policies. One of them is active and what we&#8217;re using now. Let&#8217;s take a look at the permissions.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125609824.png" alt="" class="wp-image-329"/><figcaption><em>&lt;aws iam get-policy-version &#8211;policy-arn arn:aws:iam:::policy/cg-raynor-policy-iam_privesc_by_rollback_cgidlmvqgs57ds &#8211;version-id v1 &#8211;profile Raynor</em>></figcaption></figure>
+
+
+
+<p>Looks like we have permissions to active or give default to any policy version we want. <em>Hmmm&#8230;.interesting</em>.</p>
+
+
+
+<p><strong><em>Step 2: Finding the version with admin rights</em></strong>.</p>
+
+
+
+<p>It seems we have a version of the policy that has admin rights. Let&#8217;s use the same command we used earlier to look at the other versions.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125700671.png" alt="" class="wp-image-330"/><figcaption><em>Can&#8217;t be this version. This one let&#8217;s you get anything dealing with IAM.</em></figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/Screenshot-2022-07-04-125735.png" alt="" class="wp-image-333"/><figcaption><em>This version denies anything only if the source IP address is not 192.0.2.0/24 or<br>203.0.113.0/24.</em></figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125921378.png" alt="" class="wp-image-334"/><figcaption><em>Looks like we&#8217;re getting warmer cause this version gives us full access to anything S3 related. </em></figcaption></figure>
+
+
+
+<p>Good sauce! we found the version we&#8217;ve been looking for to take affect, version 3.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_130004397.png" alt="" class="wp-image-335"/><figcaption><em>This version gives us access to everything.</em></figcaption></figure>
+
+
+
+<p><strong><em>Step 3: Giving Raynor admin rights</em></strong></p>
+
+
+
+<p>Now that we know which version has the admin rights lets make that our default and make sure it took affect.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_130100142.png" alt="" class="wp-image-336"/><figcaption><em>&lt;aws iam set-default-policy-version &#8211;policy-arn arn:aws:iam:::policy/cg-raynor-policy-iam_privesc_by_rollback_cgidlmvqgs57ds &#8211;version-id v3 &#8211;profile Raynor</em>> <em>We can see our default version is 3 now.</em></figcaption></figure>
+
+
+
+<p><em><strong>Step 4: Make havoc.</strong></em></p>
+
+
+
+<p>We&#8217;re supposedly an attacker who just elevated a user to have admin access so let&#8217;s spin up an EC2 for crypto mining to play the part. I&#8217;m gonna be using terraform to launch a simple T2.micro Linux machine.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_154109511.png" alt="" class="wp-image-242"/><figcaption><em>As we can see there&#8217;s no running EC2&#8217;s at this time</em></figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_154208983.png" alt="" class="wp-image-243"/><figcaption><em>I have the terraform file made which I copied from my Github.</em></figcaption></figure>
+
+
+
+<p>Now lets deploy our EC2.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_154624397.png" alt="" class="wp-image-244"/><figcaption><em>Voila! We now have a running instances.</em></figcaption></figure>
+
+
+
+<p>Let&#8217;s take a look at our CloudTrail event&#8217;s to make sure Raynor did it.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_154929082-1024x248.png" alt="" class="wp-image-245"/><figcaption><em>Yep looks like Raynor was the culprit&#8230;.hehe</em></figcaption></figure>
+
+
+
+<p><strong><em>Conclusion</em></strong></p>
+
+
+
+<p>We should always be mindful the permissions we give to our user&#8217;s. Raynor shouldn&#8217;t be able to take action to default any policy version in the AWS environment. Practice least privileges, give enough to do the job. </p>
+
+
+
+<p>And that&#8217;s the end of our lab for the day. Next time I&#8217;ll do something a bit different so stay tuned <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Flaws.Cloud</title>
+		<link>/2022/05/25/flaws-cloud/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Wed, 25 May 2022 16:12:13 +0000</pubDate>
+				<category><![CDATA[Flaws.Cloud]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=159</guid>
+
+					<description><![CDATA[Welcome everyone to my write up of flaws.cloud! Big thank you to Day for introducing me to this challenge! Even though the challenge had hints to help there was some brainstorming and Googling. So without further Level 1 This level is *buckets* of fun. See if you can find the first sub-domain. First thing I [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Welcome everyone to my write up of <a rel="noreferrer noopener" href="http://flaws.cloud/" data-type="URL" data-id="http://flaws.cloud/" target="_blank">flaws.cloud</a>! Big thank you to Day for introducing me to this challenge! Even though the challenge had hints to help there was some brainstorming and Googling. So without further</p>
+
+
+
+<p><strong>Level 1</strong></p>
+
+
+
+<p><em>This level is *buckets* of fun. See if you can find the first sub-domain.</em></p>
+
+
+
+<p>First thing I did was an nslookup on the domain name (flaws.cloud) to get the IP address. I took the IP address and insert it into my browser which lead me to the Amazon S3 page. The whole point of this level was to get the sub-domain of the bucket so I had to do a nslookup again with the IP address provided, it gave me not only the sub-domain but the region it was hosted on.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/Screenshot-2022-05-02-211634-1024x462.png" alt="" class="wp-image-166"/></figure>
+
+
+
+<p>So not that we got the sub-domain what should we do with this information? Well we have to get to level 2! and I wonder if this bucket have any loose permissions on it? In order to do that we have to run the command &lt;aws s3 ls s3:flaws.cloud/ &#8212; no-sign-request &#8211;region us-east-2&gt;, which tells aws to list all the files in this S3 bucket in this region.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-02_213241370.png" alt="" class="wp-image-167"/></figure>
+
+
+
+<p>Hm&#8230;.that robots.txt file looks interesting. Let&#8217;s copy it to our local drive with this command &lt;aws s3 cp s3://flaws.cloud/secret-dd02c7c.html ./Downloads&gt; and let&#8217;s see what it says&#8230;.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-02_213913247-1024x576.png" alt="" class="wp-image-168"/><figcaption>Looks like we found the link to level 2!</figcaption></figure>
+
+
+
+<p><strong><em>Lessons learned</em></strong>: First things first is we should always check the permission for your S3 bucket. Yes you should have s3:GetObjects permissions turned on for your static website for everyone to see but you should be careful not to have everyone access to the list command.</p>
+
+
+
+<p><strong>Level 2</strong></p>
+
+
+
+<p><em>The next level is fairly similar, with a slight twist. You&#8217;re going to need your own AWS account for this. You just need the&nbsp;free tier.</em></p>
+
+
+
+<p>Now for this level we&#8217;re gonna need an AWS account, you can sign up for a free tier account anytime at <a rel="noreferrer noopener" href="https://portal.aws.amazon.com/billing/signup?type=enterprise#/start/email" data-type="URL" data-id="https://portal.aws.amazon.com/billing/signup?type=enterprise#/start/email" target="_blank">here</a>. </p>
+
+
+
+<p>The permissions on this S3 is loose but only for AWS accounts. Run this command &lt;aws s3 &#8211;profile (your account name goes here) ls s3://(bucket name, which will be the https link we found in the last level)&gt; to see all the files in the bucket.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-03_130432085.png" alt="" class="wp-image-170"/></figure>
+
+
+
+<p>Copied the secret file to my local drive and was able to go to level 3!</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-03_130910123-1024x576.png" alt="" class="wp-image-171"/></figure>
+
+
+
+<p><strong><em>Lesson Learned</em></strong>: Even though you limited access from the public you can still make it open to anybody with an AWS account. Make sure your not only configuring limited access from outsider&#8217;s but also other AWS user&#8217;s.</p>
+
+
+
+<p><strong>Level 3</strong></p>
+
+
+
+<p><em>The next level is fairly similar, with a slight twist. Time to find your first AWS key! I bet you&#8217;ll find something that will let you list what other buckets are.</em></p>
+
+
+
+<p>First thing we should do is list all the files in the bucket with the ls command from our previous level. Notice how there&#8217;s a git file in the bucket. In order for use to see the git history we have to use this command &lt;aws s3 sync s3://(bucketname) &#8212; no-sign-request &#8211;region&gt; to retrieve the git history.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-09_140849954.png" alt="" class="wp-image-174"/><figcaption>Listing the objects in the bucket</figcaption></figure>
+
+
+
+<p>Once all the git files have been retrieved use git log to go through the history then use git diff to see what changed.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-09_140939441.png" alt="" class="wp-image-175"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-09_141209066.png" alt="" class="wp-image-176"/></figure>
+
+
+
+<p>Looks like the creator made a mistake and hard coded their credentials. You can configure a profile with the aws configure command. </p>
+
+
+
+<p>Once that is done we can run the command &lt; aws &#8211;profile flaws s3 ls&gt; to get the name of the next level bucket.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-09_141407681.png" alt="" class="wp-image-177"/></figure>
+
+
+
+<p><strong><em>Lessons learned</em></strong>: People think accidentally leaking their access key and deleting the leak immediately will save them but in the end you always need to revoke said access key and make new ones even if you don&#8217;t suspect anything.</p>
+
+
+
+<p><strong>Level 4 </strong></p>
+
+
+
+<p><em>For the next level, you need to get access to the web page running on an EC2 at&nbsp;<a href="http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/">4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud</a> It&#8217;ll be useful to know that a snapshot was made of that EC2 shortly after nginx was setup on it.</em></p>
+
+
+
+<p>Firstly before we start please make sure you have a AWS free tier account because for this level your gonna need it. You can make one here. Afterwards configure said account with the aws configure command, you will need your access and secret key for that.</p>
+
+
+
+<p>Secondly, after making a free tier account, we need the owner ID to find the snapshot. Running the command sts get-caller-identity will help.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_090106309.png" alt="" class="wp-image-206"/></figure>
+
+
+
+<p>Good so the user ID is &#8216;975426262029&#8217; now let&#8217;s use that to list all the snapshots that user has.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/Screenshot-2022-05-25-090316.png" alt="" class="wp-image-207"/><figcaption>Run the command &lt;aws &#8211;profile flaws ec2 describe-snapshots &#8211;owner-id 975426262029&gt; to get all snapshots made by the user.</figcaption></figure>
+
+
+
+<p>Now since we have the snapshot ID we can can use it to make a volume in our free tier account. </p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_091149580.png" alt="" class="wp-image-208"/><figcaption>Running the command &lt;aws &#8211;profile (name of you profile) ec2 create-volume &#8211;availability-zone us-west-2a &#8211;region us-west-2 &#8211;snapshot-id snap-0b49342abd1bdcb89&gt;</figcaption></figure>
+
+
+
+<p>After you made the volume out of the snapshot you should be able to see it under the Volumes tab in EC2. If you don&#8217;t you have to change the region to us-west-2. Why did we create the volume in us-west-2? because the user created that snapshot in that region, if we we&#8217;re to make the volume using that snapshot in another region the volume would not work.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_091746778-1024x101.png" alt="" class="wp-image-209"/></figure>
+
+
+
+<p>Make an EC2 instances with that volume by launching an instances, you can choose which ever OS you would like to use, making a key pair to ssh into the instance, and making a new volume with the snapshop ID. </p>
+
+
+
+<p>During the make of the EC2 make sure you create a new volume instead of the one given. It should look like this:</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_094909869.png" alt="" class="wp-image-214"/></figure>
+
+
+
+<p>Now you should have an EC2 with the volume ready to be mounted.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_092915515.png" alt="" class="wp-image-210"/></figure>
+
+
+
+<p>Now SSH into the EC2 to mount the volume, I&#8217;m using windows so I will be using Putty. Once inside the EC2 use the command lsblk to list all the block devices. You should see at the bottom two devices called xvde and xvde1. We need to mount the xvde1 because if you recall when making the EC2 we had to make a second volume in the /dev/sde. Run the command &lt;sudo mount /dev/xvde1 /mnt&gt; to mount the device and run the &lt;lsblk&gt; again and you should see a /mnt next to the device like this.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_094041700.png" alt="" class="wp-image-211"/></figure>
+
+
+
+<p>You will need to change into the device and into the /home/ubuntu directory to cat the setupNginx.sh file.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_094301756.png" alt="" class="wp-image-212"/></figure>
+
+
+
+<p>Now that we have the password lets get to level 5.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_094355603.png" alt="" class="wp-image-213"/></figure>
+
+
+
+<p><strong><em>Lesson Learned: </em></strong>A lot of user use snapshots to backup a point and time of an EC2 but never protect said snapshot. One way to protect and sensitive files on the snapshot is to encrypt the snapshot or limited access on who can use the snapshot.</p>
+
+
+
+<p><strong>Level 5 </strong></p>
+
+
+
+<p><em>This EC2 has a simple HTTP only proxy on it. Here are some examples of it&#8217;s usage:</em></p>
+
+
+
+<ul><li><em><a href="http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/flaws.cloud/">http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/flaws.cloud/</a></em></li><li><em><a href="http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/summitroute.com/blog/feed.xml">http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/summitroute.com/blog/feed.xml</a></em></li><li><em><a href="http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/neverssl.com/">http://4d0cf09b9b2d761a7d87be99d17507bce8b86f3b.flaws.cloud/proxy/neverssl.com/</a></em></li></ul>
+
+
+
+<p><em>See if you can use this proxy to figure out how to list the contents of the level6 bucket at&nbsp;<a href="http://level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.cloud/">level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.cloud</a>&nbsp;that has a hidden directory in it.</em></p>
+
+
+
+<p>For this level we have some instance metadata and user data not correctly protected. We can exploit the information using the curl command. </p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_101033902.png" alt="" class="wp-image-215"/><figcaption>How did you figure out how to read the metadata? I used the <a href="http://www.dowdandassociates.com/blog/content/howto-get-amazon-ec2-instance-metadata/" data-type="URL" data-id="http://www.dowdandassociates.com/blog/content/howto-get-amazon-ec2-instance-metadata/" target="_blank" rel="noreferrer noopener">documentation</a> to help me.</figcaption></figure>
+
+
+
+<p>Now we see there&#8217;s alot of dates but the only data we care for is the latest data so let&#8217;s curl into latest. Then we see meta-data, lets curl into that and now we see a whole bunch of data but the only one that sticks out to me is the IAM data.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_101518919.png" alt="" class="wp-image-216"/></figure>
+
+
+
+<p>Looks like there&#8217;s some security credentials let&#8217;s curl into it and see what&#8217;s in it.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_101736093-1024x171.png" alt="" class="wp-image-217"/></figure>
+
+
+
+<p>Looks like there&#8217;s some credentials left out in the open. Let&#8217;s configure a profile with those credentials to see if we can list all the contents in the level 6 bucket.</p>
+
+
+
+<p>Once your finished let&#8217;s list all the contents using the command &lt;aws &#8211;profile (your profile name) s3 ls level6-cc4c404a8a8b876167f5e70a7d8c9880.flaws.cloud&gt;</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_102126878.png" alt="" class="wp-image-218"/></figure>
+
+
+
+<p>Now that we can see the contents of this bucket we can move on to level 6.</p>
+
+
+
+<p><strong><em>Lesson Learned: </em></strong>Most customers use the metadata IP address to get metadata on themselves. It can be used for good but also for bad, for example in level 5, we didn&#8217;t have to do much work in order to get security credentials on the profile user. In order to prevent data like that from getting leaked make sure your enforcing IMDSv2 and having your applications deny any request coming in from IP address 169.254.169.254</p>
+
+
+
+<p><strong>Level 6</strong></p>
+
+
+
+<p><em>For this final challenge, you&#8217;re getting a user access key that has the SecurityAudit policy attached to it. See what else it can do and what else you might find in this AWS account.</em></p>
+
+
+
+<p><em>Access key ID: AKIAJFQ6E7BY57Q3OBGA<br>Secret: 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</em></p>
+
+
+
+<p>Before we start on this level let&#8217;s configure a profile using the credentials given to us. </p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_110528425.png" alt="" class="wp-image-219"/></figure>
+
+
+
+<p>After we configure our user let&#8217;s figure out who we are.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_110649798.png" alt="" class="wp-image-220"/></figure>
+
+
+
+<p>We have a set user &#8216;Level6&#8217; that&#8217;s different from our configure name, since we have the user name for those credentials let&#8217;s figure out what type of policies are attached to said user.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_110912414.png" alt="" class="wp-image-221"/></figure>
+
+
+
+<p>We see that we have two polices listed one of them the creator of the challenge created. Let&#8217;s take a look into that policy to get the version ID.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_113720064.png" alt="" class="wp-image-222"/></figure>
+
+
+
+<p>Now that we have the version ID let&#8217;s see what the policy is giving permissions to do. </p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_113911771.png" alt="" class="wp-image-223"/><figcaption>We can see the policy is allowing us to call an api gateway.</figcaption></figure>
+
+
+
+<p>9 times outta 10 an api gateway will have a Lambda function attached to it. Let&#8217;s list out all the Lambda functions on this account.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_115824575.png" alt="" class="wp-image-224"/></figure>
+
+
+
+<p>We have a Lambda function named &#8216;Level6&#8217; list see what the Lambda does.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_120015443.png" alt="" class="wp-image-225"/><figcaption>This tells us the ability to execute the api and that the rest api ID is s33ppypa75</figcaption></figure>
+
+
+
+<p>Now that we have the rest api ID we want to know the stage name</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_120621076.png" alt="" class="wp-image-226"/></figure>
+
+
+
+<p>The output shows that it&#8217;s in the PROD stage. You can call Lambda functions by it&#8217;s rest api and it&#8217;s stage name. Let&#8217;s input https://s33ppypa75.execute-api.us-west-2.amazonaws.com/Prod/level6 into our browser and let&#8217;s see what comes up.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/05/image_2022-05-25_120853178.png" alt="" class="wp-image-227"/></figure>
+
+
+
+<p>Looks like we have the link to the end of the challenge!</p>
+
+
+
+<p><strong><em>Lessons Learned</em></strong>: Giving permissions to sensitive data like polices in your environment can really be detrimental. Attackers can leverage this information to gain access to your account any way they can. One thing you can do is give least privilege&#8217;s to certain user&#8217;s.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Network Analysis &#8211; Malware Compromise</title>
+		<link>/2022/01/31/network-analysis-malware-compromise/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Mon, 31 Jan 2022 23:14:08 +0000</pubDate>
+				<category><![CDATA[Blue Teams Labs Online]]></category>
+		<category><![CDATA[Challenges]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=135</guid>
+
+					<description><![CDATA[Hello everyone and welcome back! Today I just finished another Blue Team Labs Online Challenge! This challenge is dealing with WireShark and reading PCAPs. Wireshark is a packet sniffer and analysis tool. It captures network traffic on the local network and stores that data for offline analysis.&#160;You can learn more here: https://www.varonis.com/blog/how-to-use-wireshark What&#8217;s the private [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Hello everyone and welcome back! Today I just finished another Blue Team Labs Online Challenge! This challenge is dealing with WireShark and reading PCAPs. Wireshark is a packet sniffer and analysis tool. It captures network traffic on the local network and stores that data for offline analysis.&nbsp;You can learn more here: https://www.varonis.com/blog/how-to-use-wireshark</p>
+
+
+
+<figure class="wp-block-image aligncenter size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/01/Screenshot-2022-01-31-173742-1024x428.png" alt="" class="wp-image-139"/></figure>
+
+
+
+<div class="wp-container-1 wp-block-group">
+<ul><li>What&#8217;s the private IP of the infected host?</li></ul>
+</div>
+
+
+
+<p>This one is pretty self explanatory. As soon as you open the PCAP BTLO gives you, your meet with the IP address. A private IP address is&nbsp;the address your network router assigns to your device. Each device within the same network is assigned a unique private IP address (sometimes called a private network address), this is how devices on the same internal network talk to each other. Address ranges are Class A (10.0.0.0 to 10.255.255.255), Class B (172.16.0.0 to 172.31.255.255), Class C (192.168.0.0 to 192.168.255.255).</p>
+
+
+
+<div class="wp-container-2 wp-block-group">
+<ul><li>What’s the malware binary that the macro document is trying to retrieve?&nbsp;</li></ul>
+</div>
+
+
+
+<p>Now this one I was a little stomp trying to figure out the answer but this is where Google comes in. I found an article that had a command that help me in my investigation. Thank you Brad Duncan at Palo Alto Networks for writing this guide: https://unit42.paloaltonetworks.com/wireshark-tutorial-emotet-infection/ The command that I used was &lt;(http.request&nbsp;<strong>or http.response</strong>&nbsp;or tls.handshake.type eq 1) and !(ssdp)&gt; where I followed the TCP stream on the first one.</p>
+
+
+
+<figure class="wp-block-image aligncenter size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/01/image_2022-01-31_175458-1024x576.png" alt="" class="wp-image-140"/></figure>
+
+
+
+<div class="wp-container-3 wp-block-group">
+<ul><li>From what domain HTTP requests with GET /images/ are coming from?</li></ul>
+</div>
+
+
+
+<p>For this one I didn&#8217;t use no special command for the answer. I literally just scrolled down the list until I seen a GET /images/ command in info.</p>
+
+
+
+<div class="wp-container-4 wp-block-group">
+<ul><li>The SOC Team found Dridex, a follow-up malware from Ursnif infection, to be the culprit. The customer who sent her the macro file is compromised. What’s the full URI ending in .rar where Ursnif retrieves the follow-up malware from?</li></ul>
+</div>
+
+
+
+<p>For our second to last question I used the same command &lt;(http.request or tls.handshake.type eq 1) and !(ssdp)&gt; that I got from the Palo Alto article to help me with this one and opened the packet.</p>
+
+
+
+<figure class="wp-block-image aligncenter size-full is-resized"><img loading="lazy" src="https://artistuniverse.tech/wp-content/uploads/2022/01/image_2022-01-31_180708.png" alt="" class="wp-image-141" width="958" height="792"/></figure>
+
+
+
+<div class="wp-container-5 wp-block-group">
+<ul><li>What is the Dridex post-infection traffic IP addresses beginning with 185.?</li></ul>
+</div>
+
+
+
+<p>Last be not least how did I solve the final question? Will I just scrolled. The answer is in the question and no need to overthink this one.</p>
+
+
+
+<p class="has-text-align-center">Ladies and gentlemen I hope you enjoyed this read and learned something from my post! feel free to let me know in my contact me form on my homepage!</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

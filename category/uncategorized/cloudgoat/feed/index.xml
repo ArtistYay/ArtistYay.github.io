@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CloudGoat &#8211; User&#039;s blog</title>
+	<atom:link href="/category/uncategorized/cloudgoat/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Just another WordPress site</description>
+	<lastBuildDate>Mon, 13 Jun 2022 20:01:41 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.0.3</generator>
+	<item>
+		<title>iam_privesc_by_rollback</title>
+		<link>/2022/06/13/iam_privesc_by_rollback/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Mon, 13 Jun 2022 20:01:41 +0000</pubDate>
+				<category><![CDATA[CloudGoat]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=231</guid>
+
+					<description><![CDATA[Today we&#8217;re going to do a privilege escalation exploit. We will start with an IAM user named &#8216;Raynor&#8217; who has little to no privileges and give him admin rights so let&#8217;s get started. Step 1: Analyze Raynor privileges One thing we have to do is make an sts call to get more information on the [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_123803077.png" alt="" class="wp-image-232"/></figure>
+
+
+
+<p>Today we&#8217;re going to do a privilege escalation exploit. We will start with an IAM user named &#8216;Raynor&#8217; who has little to no privileges and give him admin rights so let&#8217;s get started.</p>
+
+
+
+<p><strong><em>Step 1: Analyze Raynor privileges</em></strong></p>
+
+
+
+<p>One thing we have to do is make an sts call to get more information on the user at hand.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125256053.png" alt="" class="wp-image-326"/><figcaption><em>&lt;aws &#8211;profile Raynor &#8211;region us-east-1 sts get-caller-identity&gt;</em> Note the &#8211;profile Raynor has been set up before hand using the AWS configure command. When create this scenario Terraform provided me with the credentials I needed to set up.</figcaption></figure>
+
+
+
+<p>Now that we have the IAM user name we can continue with listing the policies the user has.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125338882.png" alt="" class="wp-image-327"/><figcaption><em>&lt;aws iam list-attached-user-policies &#8211;user-name raynor-iam_privesc_by_rollback_cgidlmvqgs57ds &#8211;profile Raynor</em>&gt;</figcaption></figure>
+
+
+
+<p>Great! we got the policy name that&#8217;s attached to Raynor. Now let&#8217;s see what type of permissions Raynor has. We&#8217;re going to have to list the versions of the policies first.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125426503.png" alt="" class="wp-image-328"/><figcaption><em>&lt;aws iam list-policy-versions &#8211;policy-arn arn:aws:iam:::policy/cg-raynor-policy-iam_privesc_by_rollback_cgidlmvqgs57ds &#8211;profile Raynor</em>></figcaption></figure>
+
+
+
+<p>You see that we have five versions of the policies. One of them is active and what we&#8217;re using now. Let&#8217;s take a look at the permissions.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125609824.png" alt="" class="wp-image-329"/><figcaption><em>&lt;aws iam get-policy-version &#8211;policy-arn arn:aws:iam:::policy/cg-raynor-policy-iam_privesc_by_rollback_cgidlmvqgs57ds &#8211;version-id v1 &#8211;profile Raynor</em>></figcaption></figure>
+
+
+
+<p>Looks like we have permissions to active or give default to any policy version we want. <em>Hmmm&#8230;.interesting</em>.</p>
+
+
+
+<p><strong><em>Step 2: Finding the version with admin rights</em></strong>.</p>
+
+
+
+<p>It seems we have a version of the policy that has admin rights. Let&#8217;s use the same command we used earlier to look at the other versions.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125700671.png" alt="" class="wp-image-330"/><figcaption><em>Can&#8217;t be this version. This one let&#8217;s you get anything dealing with IAM.</em></figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/Screenshot-2022-07-04-125735.png" alt="" class="wp-image-333"/><figcaption><em>This version denies anything only if the source IP address is not 192.0.2.0/24 or<br>203.0.113.0/24.</em></figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_125921378.png" alt="" class="wp-image-334"/><figcaption><em>Looks like we&#8217;re getting warmer cause this version gives us full access to anything S3 related. </em></figcaption></figure>
+
+
+
+<p>Good sauce! we found the version we&#8217;ve been looking for to take affect, version 3.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_130004397.png" alt="" class="wp-image-335"/><figcaption><em>This version gives us access to everything.</em></figcaption></figure>
+
+
+
+<p><strong><em>Step 3: Giving Raynor admin rights</em></strong></p>
+
+
+
+<p>Now that we know which version has the admin rights lets make that our default and make sure it took affect.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-04_130100142.png" alt="" class="wp-image-336"/><figcaption><em>&lt;aws iam set-default-policy-version &#8211;policy-arn arn:aws:iam:::policy/cg-raynor-policy-iam_privesc_by_rollback_cgidlmvqgs57ds &#8211;version-id v3 &#8211;profile Raynor</em>> <em>We can see our default version is 3 now.</em></figcaption></figure>
+
+
+
+<p><em><strong>Step 4: Make havoc.</strong></em></p>
+
+
+
+<p>We&#8217;re supposedly an attacker who just elevated a user to have admin access so let&#8217;s spin up an EC2 for crypto mining to play the part. I&#8217;m gonna be using terraform to launch a simple T2.micro Linux machine.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_154109511.png" alt="" class="wp-image-242"/><figcaption><em>As we can see there&#8217;s no running EC2&#8217;s at this time</em></figcaption></figure>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_154208983.png" alt="" class="wp-image-243"/><figcaption><em>I have the terraform file made which I copied from my Github.</em></figcaption></figure>
+
+
+
+<p>Now lets deploy our EC2.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_154624397.png" alt="" class="wp-image-244"/><figcaption><em>Voila! We now have a running instances.</em></figcaption></figure>
+
+
+
+<p>Let&#8217;s take a look at our CloudTrail event&#8217;s to make sure Raynor did it.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/06/image_2022-06-13_154929082-1024x248.png" alt="" class="wp-image-245"/><figcaption><em>Yep looks like Raynor was the culprit&#8230;.hehe</em></figcaption></figure>
+
+
+
+<p><strong><em>Conclusion</em></strong></p>
+
+
+
+<p>We should always be mindful the permissions we give to our user&#8217;s. Raynor shouldn&#8217;t be able to take action to default any policy version in the AWS environment. Practice least privileges, give enough to do the job. </p>
+
+
+
+<p>And that&#8217;s the end of our lab for the day. Next time I&#8217;ll do something a bit different so stay tuned <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f642.png" alt="🙂" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

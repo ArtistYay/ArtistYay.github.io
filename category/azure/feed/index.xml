@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Azure &#8211; User&#039;s blog</title>
+	<atom:link href="/category/azure/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Just another WordPress site</description>
+	<lastBuildDate>Tue, 19 Jul 2022 00:42:42 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.0.3</generator>
+	<item>
+		<title>Terraform in Azure</title>
+		<link>/2022/07/19/terraform-in-azure/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Tue, 19 Jul 2022 00:42:42 +0000</pubDate>
+				<category><![CDATA[Azure]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=416</guid>
+
+					<description><![CDATA[Terraform Initialize The command &#60;terraform init> initialize a terraform environment, and downloading providers and modules. I used cloud shell to make run terraform on. First thing I did was make a directory just for terraform using &#60;mkdir> command and the changed into that directory. I then used the command &#60;code provider.tf> to make a file [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p><strong><em>Terraform Initialize</em></strong></p>
+
+
+
+<p>The command <em>&lt;terraform init></em> initialize a terraform environment, and downloading providers and modules.</p>
+
+
+
+<p>I used cloud shell to make run terraform on. First thing I did was make a directory just for terraform using <em>&lt;mkdir> </em>command and the changed into that directory.</p>
+
+
+
+<p>I then used the command <em>&lt;code provider.tf></em> to make a file called provider.tf and open it using the Azure IDE called Monaco.</p>
+
+
+
+<p>I think copy the provider code from the terraform <a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group" data-type="URL" data-id="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group" target="_blank" rel="noreferrer noopener">registry</a> and paste it in the file.</p>
+
+
+
+<pre class="wp-block-code"><code>terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.14.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+
+  storage_use_azuread = true
+}</code></pre>
+
+
+
+<p>Afterwards I ran <em>&lt;terraform init> </em></p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_195652607.png" alt="" class="wp-image-417"/></figure>
+
+
+
+<p><strong><em>Terraform Format</em></strong></p>
+
+
+
+<p>The <em>&lt;terraform fmt></em> command automatically format the files your coding in.</p>
+
+
+
+<p>So first the I did is make a variables.tf and main.tf file using the &lt;touch> command. Once I did that I open all the files in the directory with <em>&lt;code .></em> command.</p>
+
+
+
+<p>I wanted to make a resource group first so I looked for the template in the registry and come across this.</p>
+
+
+
+<pre class="wp-block-code"><code>resource "azurerm_resource_group" "example" {
+  name     = "example"
+  location = "West Europe"
+}
+</code></pre>
+
+
+
+<p>I edited it with my location name which is &#8220;East US&#8221;. Now let&#8217;s go to out variables file and add a variable. Here&#8217;s what I put in my variable file.</p>
+
+
+
+<pre class="wp-block-code"><code>variable "resource_group_name" {
+  description = "Name for the resource group"
+  type        = string
+  default     = "terraform-basics"
+}</code></pre>
+
+
+
+<p>Now let&#8217;s format to see if there&#8217;s any format changes.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_200546703.png" alt="" class="wp-image-418"/></figure>
+
+
+
+<p><strong><em>Terraform validate</em></strong></p>
+
+
+
+<p>Command <em>&lt;terraform validate></em> confirms if the files are syntactically and logically sound. Basically making sure everything makes sense.</p>
+
+
+
+<p><strong><em>Terraform Plan</em></strong></p>
+
+
+
+<p><em><strong>&lt;terraform plan></strong></em> displays the actions Terraform will take.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_201138304-1024x624.png" alt="" class="wp-image-420"/></figure>
+
+
+
+<p>I know some of your like &#8220;wait Artist my output doesn&#8217;t look like that&#8221;, that&#8217;s because I add more to my files.</p>
+
+
+
+<p>In my main.tf file I add a container group and put it in my resource group.</p>
+
+
+
+<pre class="wp-block-code"><code>resource "azurerm_resource_group" "basics" {
+  name     = var.resource_group_name
+  location = var.location
+}
+resource "azurerm_container_group" "example" {
+  name                = var.container_group_name
+  location            = azurerm_resource_group.basics.location
+  resource_group_name = azurerm_resource_group.basics.name
+  ip_address_type     = "Public"
+  dns_name_label      = "${var.prefix}-${var.container_group_name}"
+  os_type             = "Linux"
+
+  container {
+    name   = "inspectorgadget"
+    image  = "jelledruyts/inspectorgadget:latest"
+    cpu    = "0.5"
+    memory = "1.0"
+
+    ports {
+      port     = 80
+      protocol = "TCP"
+    }
+  }
+}</code></pre>
+
+
+
+<p>Before I continue on I just want to explain my resource group name and location in the resource &#8220;azure container group&#8221;. So I wanted to add the container to a resource group right? I had to specific the name, I told terraform to look in the resource &#8220;azurerm_resource_group&#8221;  with &#8220;basics&#8221; and under name you should get the name of the resource group. Same thing with the location.</p>
+
+
+
+<p>And in my variables.tf file I just declared the variables needed.</p>
+
+
+
+<pre class="wp-block-code"><code>variable "resource_group_name" {
+  description = "Name for the resource group"
+  type        = string
+  default     = "terraform-basics"
+}
+variable "location" {
+  description = "Azure region"
+  type        = string
+  default     = "East US"
+}
+variable "container_group_name" {
+  description = "name of the container group"
+  type        = string
+  default     = "terraform-basics"
+}
+variable "prefix" {
+  description = "Prefix string to ensure FQDNs are globally unique"
+  type        = string
+}
+</code></pre>
+
+
+
+<p>Even made a terraform.tfvars file to specific my variables more.</p>
+
+
+
+<pre class="wp-block-code"><code>location = "eastus"
+prefix   = "Artist"</code></pre>
+
+
+
+<p><strong><em>Terraform Apply</em></strong></p>
+
+
+
+<p><em>&lt;Terraform apply></em> just builds out or creates your resources in Azure.</p>
+
+
+
+<p>Now let&#8217;s go ahead and apply.</p>
+
+
+
+<figure class="wp-block-image size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_201930978.png" alt="" class="wp-image-421"/><figcaption>Again it will look different to your output because I applied before adding more code to the files.</figcaption></figure>
+
+
+
+<p><strong><em>Terraform Destroy</em></strong></p>
+
+
+
+<p>And now to destroy all that I created <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f641.png" alt="🙁" class="wp-smiley" style="height: 1em; max-height: 1em;" /> with the &lt;terraform destroy> command.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/07/image_2022-07-18_203533818-1024x362.png" alt="" class="wp-image-423"/><figcaption>Bye Bye hard work <img src="https://s.w.org/images/core/emoji/14.0.0/72x72/1f641.png" alt="🙁" class="wp-smiley" style="height: 1em; max-height: 1em;" /> lol</figcaption></figure>
+
+
+
+<p><strong><em>Morale of the story:</em></strong> Nothing to extravagant, just wanted to brush up on some Terraform in Azure. To me Azure is a lot to learn then AWS. Just the other day I didn&#8217;t know what a cloud shell was and when I finally figured out I can&#8217;t stop using it lol. It might look like i&#8217;m all over the place with my learning but this is just how I learn. Doing different things to see how they all flow together but that&#8217;s all I have for today, just wanna keep you updated.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>A Security Trio in Azure</title>
+		<link>/2022/07/15/a-security-trio-in-azure/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Fri, 15 Jul 2022 15:10:44 +0000</pubDate>
+				<category><![CDATA[Azure]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=387</guid>
+
+					<description><![CDATA[Today I want to go over some Azure security technologies. What is Azure Active Directory (AD)? Azure Active Directory Is a cloud based identity service. It uses authentication to much sure you are who you say you are and authorization to know what do you have access to. Not to get confused with Active Directory [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Today I want to go over some Azure security technologies.</p>
+
+
+
+<p><strong><em>What is Azure Active Directory (AD)?</em></strong></p>
+
+
+
+<p>Azure Active Directory Is a cloud based identity service. It uses authentication to much sure you are who you say you are and authorization to know what do you have access to. Not to get confused with Active Directory for on premises Windows Servers. Azure Active Directory deals more with Internet-based services and applications like Microsoft 365, Azure services, and third-party SaaS applications. Not saying you can use both together, that&#8217;s where hybrid identity comes in.</p>
+
+
+
+<p>When you first sign up Azure AD is already in motion and you have a tenant configured already. A tenant is an organization which stores all the users in that organization.</p>
+
+
+
+<p>So what type of features work within Azure AD? or what can you do in Azure AD?:</p>
+
+
+
+<ul><li>Application Management &#8211; You can manage your cloud and on-premises apps</li><li>Authentication &#8211; User&#8217;s could be able to reset their own passwords using Self Service Password Reset (SSPR)</li><li>Conditional Access &#8211; Conditional access is a if/then statement to manage access to your cloud apps. If a user wants to access a resource, then they must complete an action.</li><li>Device Management &#8211; You can manage how cloud or on-premises devices access corporate data.</li></ul>
+
+
+
+<p>There&#8217;s many other things you can use Azure AD for, for example Azure AD Business &#8211; to &#8211; Business which you can invite corporate partner&#8217;s to access your data instead of creating a user. Or maybe you want to make onboarding a new employee easier? have a package of permissions and apps they need to get the job done and request access to them? well you can with Entitlement Management.</p>
+
+
+
+<p>Azure AD has so much to offer and I don&#8217;t wanna prolong but this is just the surface for this service.</p>
+
+
+
+<p><strong><em>What is Azure Sentinel?</em></strong></p>
+
+
+
+<p>Azure Sentinel is a SIEM (Security information and event management; a tool that an organization uses to collect, analyze, and perform security operations on its computer systems.) and a SOAR (Security orchestration automation and response; helps coordinate, execute and automate tasks between various people and tools all within a single platform.). A centralized management interface that leverages other Azure services as well.</p>
+
+
+
+<p>It can collect security data across your enterprise, detect threats with intelligence, investigate incidents using the help of AI, and respond rapidly with automation. Azure Sentinel is built and uses the Log Analytics workspace to monitor data. Data that&#8217;s been parse with Data Connectors.</p>
+
+
+
+<p>You can configure Sentinel alerts through the analytics component, Microsoft gives us analytics rule templates to help use get started. There&#8217;s different types of rules you can configure like Fusion, Machine Learning Behavioral, Anomaly, Microsoft Security, and Scheduled.</p>
+
+
+
+<p>Moral of the story Azure Sentinel is a powerful tool, how so? well you can connect to a variety of data sources and intelligently analyze monitoring data and create alerts for suspicious activities, Proactively hunt for security threats, use Jupyter notebooks to leverage Machine Learning, Automate security tasks and response through Azure Logic apps-based playbooks, even Integrate with Azure Monitor workbooks for interactive reporting and analysis!</p>
+
+
+
+<p><strong><em>What is Microsoft Defender?</em></strong></p>
+
+
+
+<p>There&#8217;s multiple Microsoft Defender versions. You have defender for cloud, defender for endpoint, even defender for IoT! so instead of focusing on one version I gave a brief description of what it is, why do we use it, and how it differs from one another.</p>
+
+
+
+<ul><li><strong>Microsoft Defender for Cloud (Azure Security Center) &#8211;</strong> Defender for Cloud is a way to protect all your cloud assets in one. It doesn&#8217;t matter if your using AWS or GCP, defender protects them all! even on premises environments. Defender for cloud has various plans for different scenarios, for example, let&#8217;s you have a MySQL server that has sensitive data, you would want Defender for servers. Not only does protect your environment but it also recommends best security posture for your environment using a Secure Score and how you can remediate the misconfigurations.</li><li><strong>Microsoft Defender for Identity (Azure Advanced Threat Protection) &#8211; </strong>The most common attack in cybersecurity is social engineering. A user doesn&#8217;t take the extra precaution to analyze what their clicking a link they received in a email and entering credentials but this is where Defender for Identity comes in. No it doesn&#8217;t stop user&#8217;s from clicking links but it does alert you when a user activity is suspicious. It first monitor&#8217;s user&#8217;s behaviors from your on premises Active Directory then creates a baseline of that behavior. For example, let&#8217;s say your user is searching for information about other user&#8217;s in the environment, Defender for identity use the cyber kill chain and throws up a flag marking it as reconnaissance.</li><li><strong style="color: var(--ast-global-color-3); font-size: 1rem;">Microsoft Defender for Endpoint &#8211;</strong> Defender for Endpoint helps you prevent, detect, and respond to threats on devices in your environment. That&#8217;s including mobile devices to! It provides Threat and vulnerability management, Attack surface reduction, Next-generation protection, Endpoint detection and response, Automated investigation and remediation, Microsoft Threat Experts, and Centralized management and API. It uses behavioral sensors to gather activities on the endpoints.</li><li><strong>Microsoft 365 Defender &#8211; </strong>Let&#8217;s say you have all these Defender for Endpoint, Office 365, Identity, and Cloud Apps enabled in your environment but need a centralized view of the full scope of the attack? well that&#8217;s where Microsoft Defender comes in, Microsoft 365 defender takes that anomalous behavior alert from Defender for Endpoint and the suspicious sign in alert from Defender for Identity and puts it all in one incident so instead of going into a rabbit hole of getting information of an attack the full details of who, what, why, when, and how is all there in one. In other words Microsoft 365 Defender analyze threat data across applications, endpoints, identity, and data to build a complete picture of each attack.</li><li><strong>Microsoft Defender for Office 365 &#8211; </strong>Defender for Office 365 deals with protecting your organization from emails that has malicious attachments and links. Defender for Office 365 has two plans. Plan one has the option to safely open attachments and links, plan 2 has automated investigation and response with an attack simulation and training for your users. Defender for Office 365 has 4 layers of protection. Edge protection, Sender Intelligence, Content filtering, and Post-Delivery.</li><li><strong>Microsoft Defender for Cloud Apps &#8211; </strong>Most companies are moving their computing resources to the cloud and need a way to protect all their data and make sure all your user&#8217;s have the ability to access your data anytime and anywhere. Defender for Cloud Apps acts as a cloud access security broker (CASB) or gatekeepers to your organizations data. It also help you stay compliant with government compliance requirements and labels data with classification to prevent data loss.</li></ul>
+
+
+
+<p><strong><em>What is Microsoft Purview?</em></strong></p>
+
+
+
+<p>Data is the most sensitive thing in your organization. You need to protect it but also be in compliance of any government frameworks (HIPPA, PCI DSS, etc.) and that&#8217;s where Microsoft Purview comes in, it gives you a bird eyes view of your data estate. It helps you classify data with labels, you can see what data is out of date &amp; who owns that data, you can understand the origin of your data and how to keep your business growing, and much more. Purview is fairly new but you can learn more about it <a href="https://docs.microsoft.com/en-us/purview/" data-type="URL" data-id="https://docs.microsoft.com/en-us/purview/" target="_blank" rel="noreferrer noopener">here </a>and <a href="https://azure.microsoft.com/en-us/services/purview/#overview" data-type="URL" data-id="https://azure.microsoft.com/en-us/services/purview/#overview" target="_blank" rel="noreferrer noopener">here</a>.</p>
+
+
+
+<p><strong><em>How do they all fit together?</em></strong></p>
+
+
+
+<p>Protecting your organization can be a headache, and with all the tools available (firewalls, EDRs, IPS, etc.) it can be very expensive especially when different tools have different features. Microsoft makes it a little bit more manageable especially with your cloud assets. You can enable Microsoft Defender to help protect your on-premise, cloud, even mobile &amp; IoT devices, you can leverage Microsoft Sentinel to give you a brooder insight of what&#8217;s going on instead of pivoting to each defender tool to connect the dots, Azure AD let&#8217;s you control who has access to what, where they can access it, and when or how long they can access it and Purview makes sure your data is complaint and protected in your organization. I know all this seems to good to be true but that&#8217;s where researching and knowing what your organization needs come into play but I hope I explained this in my best ability but if anybody has questions or comments be sure to let me know on LinkedIn but until then thank you!</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

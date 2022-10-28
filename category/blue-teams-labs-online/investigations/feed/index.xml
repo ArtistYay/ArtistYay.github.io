@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Investigations &#8211; User&#039;s blog</title>
+	<atom:link href="/category/blue-teams-labs-online/investigations/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Just another WordPress site</description>
+	<lastBuildDate>Mon, 17 Jan 2022 19:17:36 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.0.3</generator>
+	<item>
+		<title>Deep Blue</title>
+		<link>/2022/01/17/blue-teams-online-deep-blue/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Mon, 17 Jan 2022 19:17:36 +0000</pubDate>
+				<category><![CDATA[Blue Teams Labs Online]]></category>
+		<category><![CDATA[Investigations]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=111</guid>
+
+					<description><![CDATA[Deep Blue is honestly the easiest challenge. It deals with knowing your Windows Event codes and looking at the CMD. In this room I learned how to identify Meterpreter which allows an attacker to control a victim&#8217;s computer by running an invisible shell and establishing a communication channel back to the attacking machine, using event [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<figure class="wp-block-image aligncenter size-full is-resized"><img src="https://artistuniverse.tech/wp-content/uploads/2022/01/image_2022-01-17_140620.png" alt="" class="wp-image-112" width="905" height="763"/></figure>
+
+
+
+<p>Deep Blue is honestly the easiest challenge. It deals with knowing your Windows Event codes and looking at the CMD. In this room I learned how to identify Meterpreter which allows an attacker to control a victim&#8217;s computer by running an invisible shell and establishing a communication channel back to the attacking machine, using event viewer. It&#8217;s all about taking your time, thinking, and asking yourself &#8220;Should a software update be in a user&#8217;s downloads file path?&#8221; This is only the beginning of showing what I&#8217;m capable of doing. For more information on DeepBlueCLI check out https://github.com/sans-blue-team/DeepBlueCLI.</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

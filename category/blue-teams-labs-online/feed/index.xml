@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Blue Teams Labs Online &#8211; User&#039;s blog</title>
+	<atom:link href="/category/blue-teams-labs-online/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Just another WordPress site</description>
+	<lastBuildDate>Mon, 31 Jan 2022 23:14:08 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.0.3</generator>
+	<item>
+		<title>Network Analysis &#8211; Malware Compromise</title>
+		<link>/2022/01/31/network-analysis-malware-compromise/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Mon, 31 Jan 2022 23:14:08 +0000</pubDate>
+				<category><![CDATA[Blue Teams Labs Online]]></category>
+		<category><![CDATA[Challenges]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=135</guid>
+
+					<description><![CDATA[Hello everyone and welcome back! Today I just finished another Blue Team Labs Online Challenge! This challenge is dealing with WireShark and reading PCAPs. Wireshark is a packet sniffer and analysis tool. It captures network traffic on the local network and stores that data for offline analysis.&#160;You can learn more here: https://www.varonis.com/blog/how-to-use-wireshark What&#8217;s the private [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Hello everyone and welcome back! Today I just finished another Blue Team Labs Online Challenge! This challenge is dealing with WireShark and reading PCAPs. Wireshark is a packet sniffer and analysis tool. It captures network traffic on the local network and stores that data for offline analysis.&nbsp;You can learn more here: https://www.varonis.com/blog/how-to-use-wireshark</p>
+
+
+
+<figure class="wp-block-image aligncenter size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/01/Screenshot-2022-01-31-173742-1024x428.png" alt="" class="wp-image-139"/></figure>
+
+
+
+<div class="wp-container-1 wp-block-group">
+<ul><li>What&#8217;s the private IP of the infected host?</li></ul>
+</div>
+
+
+
+<p>This one is pretty self explanatory. As soon as you open the PCAP BTLO gives you, your meet with the IP address. A private IP address is&nbsp;the address your network router assigns to your device. Each device within the same network is assigned a unique private IP address (sometimes called a private network address), this is how devices on the same internal network talk to each other. Address ranges are Class A (10.0.0.0 to 10.255.255.255), Class B (172.16.0.0 to 172.31.255.255), Class C (192.168.0.0 to 192.168.255.255).</p>
+
+
+
+<div class="wp-container-2 wp-block-group">
+<ul><li>What’s the malware binary that the macro document is trying to retrieve?&nbsp;</li></ul>
+</div>
+
+
+
+<p>Now this one I was a little stomp trying to figure out the answer but this is where Google comes in. I found an article that had a command that help me in my investigation. Thank you Brad Duncan at Palo Alto Networks for writing this guide: https://unit42.paloaltonetworks.com/wireshark-tutorial-emotet-infection/ The command that I used was &lt;(http.request&nbsp;<strong>or http.response</strong>&nbsp;or tls.handshake.type eq 1) and !(ssdp)&gt; where I followed the TCP stream on the first one.</p>
+
+
+
+<figure class="wp-block-image aligncenter size-large"><img src="https://artistuniverse.tech/wp-content/uploads/2022/01/image_2022-01-31_175458-1024x576.png" alt="" class="wp-image-140"/></figure>
+
+
+
+<div class="wp-container-3 wp-block-group">
+<ul><li>From what domain HTTP requests with GET /images/ are coming from?</li></ul>
+</div>
+
+
+
+<p>For this one I didn&#8217;t use no special command for the answer. I literally just scrolled down the list until I seen a GET /images/ command in info.</p>
+
+
+
+<div class="wp-container-4 wp-block-group">
+<ul><li>The SOC Team found Dridex, a follow-up malware from Ursnif infection, to be the culprit. The customer who sent her the macro file is compromised. What’s the full URI ending in .rar where Ursnif retrieves the follow-up malware from?</li></ul>
+</div>
+
+
+
+<p>For our second to last question I used the same command &lt;(http.request or tls.handshake.type eq 1) and !(ssdp)&gt; that I got from the Palo Alto article to help me with this one and opened the packet.</p>
+
+
+
+<figure class="wp-block-image aligncenter size-full is-resized"><img loading="lazy" src="https://artistuniverse.tech/wp-content/uploads/2022/01/image_2022-01-31_180708.png" alt="" class="wp-image-141" width="958" height="792"/></figure>
+
+
+
+<div class="wp-container-5 wp-block-group">
+<ul><li>What is the Dridex post-infection traffic IP addresses beginning with 185.?</li></ul>
+</div>
+
+
+
+<p>Last be not least how did I solve the final question? Will I just scrolled. The answer is in the question and no need to overthink this one.</p>
+
+
+
+<p class="has-text-align-center">Ladies and gentlemen I hope you enjoyed this read and learned something from my post! feel free to let me know in my contact me form on my homepage!</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Network Analysis ~ Ransomware</title>
+		<link>/2022/01/23/network-analysis-ransomware/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Sun, 23 Jan 2022 16:55:59 +0000</pubDate>
+				<category><![CDATA[Blue Teams Labs Online]]></category>
+		<category><![CDATA[Challenges]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=126</guid>
+
+					<description><![CDATA[The most common cyber security threat in the world right now is ransomware. Ransomware is malware that denies legitimate users access to their system and requires payment, or ransom, to regain access. They are different types of ransomware, just to name a few they are Crypto ransomware, Lockers, Scareware, Doxware/Leakware, and RaaS (Ransomware as a [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>The most common cyber security threat in the world right now is ransomware. Ransomware is malware that denies legitimate users access to their system and requires payment, or ransom, to regain access. They are different types of ransomware, just to name a few they are Crypto ransomware, Lockers, Scareware, Doxware/Leakware, and RaaS (Ransomware as a Service). The ransomware that was used in this challenge is a Trojan. The challenge is still active so I can&#8217;t give the answers but I can tell you how I got to some of the answers. The first three questions&#8217; answers were in the PCAP BTLO gives you in the ZIP file. You can open the PCAP with WireShark. For the first question, I had to google what Capture File Properties was to get the answer. For the next five questions I had to research the executable in question using Google and I came across this website: https://analyze.intezer.com/files/7004af389d633b82c3ee67055ecb0f9accae5dc0a53721da66c76825ece528f8/genetic-analysis which gave me all that I needed. And for the last question, I had to decrypt the micro that BTLO gave us in the ZIP file. The decryption tool was no longer in service so a master key was released in 2016 and you can use a decoder to decrypt the file using the master key, here is a good YouTube video if your a visual learner like myself! https://www.youtube.com/watch?v=lYDynn3MUi0 . And that is how I completed the challenge!</p>
+
+
+
+<figure class="wp-block-image aligncenter size-full"><img src="https://artistuniverse.tech/wp-content/uploads/2022/01/Screenshot-2022-01-23-115211.png" alt="" class="wp-image-128"/></figure>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Deep Blue</title>
+		<link>/2022/01/17/blue-teams-online-deep-blue/</link>
+		
+		<dc:creator><![CDATA[user]]></dc:creator>
+		<pubDate>Mon, 17 Jan 2022 19:17:36 +0000</pubDate>
+				<category><![CDATA[Blue Teams Labs Online]]></category>
+		<category><![CDATA[Investigations]]></category>
+		<guid isPermaLink="false">https://artistuniverse.tech/?p=111</guid>
+
+					<description><![CDATA[Deep Blue is honestly the easiest challenge. It deals with knowing your Windows Event codes and looking at the CMD. In this room I learned how to identify Meterpreter which allows an attacker to control a victim&#8217;s computer by running an invisible shell and establishing a communication channel back to the attacking machine, using event [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<figure class="wp-block-image aligncenter size-full is-resized"><img loading="lazy" src="https://artistuniverse.tech/wp-content/uploads/2022/01/image_2022-01-17_140620.png" alt="" class="wp-image-112" width="905" height="763"/></figure>
+
+
+
+<p>Deep Blue is honestly the easiest challenge. It deals with knowing your Windows Event codes and looking at the CMD. In this room I learned how to identify Meterpreter which allows an attacker to control a victim&#8217;s computer by running an invisible shell and establishing a communication channel back to the attacking machine, using event viewer. It&#8217;s all about taking your time, thinking, and asking yourself &#8220;Should a software update be in a user&#8217;s downloads file path?&#8221; This is only the beginning of showing what I&#8217;m capable of doing. For more information on DeepBlueCLI check out https://github.com/sans-blue-team/DeepBlueCLI.</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
